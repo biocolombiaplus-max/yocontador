@@ -1,0 +1,155 @@
+// BIO COLOMBIA - Panel administrativo de grupo empresarial
+// Modelo de datos para gestion multiempresa + redes sociales + estadisticas
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  PROPIETARIO
+  ADMINISTRADORA
+}
+
+enum SocialPlatform {
+  FACEBOOK
+  INSTAGRAM
+  WHATSAPP
+  TIKTOK
+}
+
+enum SocialAccountStatus {
+  CONECTADA
+  PENDIENTE
+  DESCONECTADA
+}
+
+enum ContentMediaType {
+  IMAGEN
+  VIDEO
+  REEL
+  CARRUSEL
+}
+
+enum ContentStatus {
+  BORRADOR
+  PROGRAMADO
+  PUBLICADO
+  FALLIDO
+}
+
+model User {
+  id                 String   @id @default(cuid())
+  cedula             String   @unique
+  name               String
+  role               UserRole
+  passwordHash       String
+  mustChangePassword Boolean  @default(true)
+  avatarColor        String   @default("#0EA5A4")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  contentPosts ContentPost[]
+  activityLogs ActivityLog[]
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  sector      String
+  description String
+  colorHex    String   @default("#0EA5A4")
+  logoUrl     String?
+  website     String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  socialAccounts SocialAccount[]
+  contentPosts   ContentPost[]
+  statSnapshots  StatSnapshot[]
+  activityLogs   ActivityLog[]
+}
+
+model SocialAccount {
+  id            String               @id @default(cuid())
+  companyId     String
+  company       Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  platform      SocialPlatform
+  handle        String
+  displayName   String?
+  status        SocialAccountStatus  @default(PENDIENTE)
+  followers     Int                  @default(0)
+  profileUrl    String?
+  accessToken   String?
+  notes         String?
+  connectedAt   DateTime?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  contentPosts ContentPostTarget[]
+
+  @@unique([companyId, platform])
+}
+
+model ContentPost {
+  id           String            @id @default(cuid())
+  companyId    String
+  company      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  title        String
+  caption      String
+  mediaType    ContentMediaType
+  mediaUrl     String?
+  status       ContentStatus     @default(BORRADOR)
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  createdById  String?
+  createdBy    User?             @relation(fields: [createdById], references: [id])
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  targets ContentPostTarget[]
+}
+
+model ContentPostTarget {
+  id              String         @id @default(cuid())
+  contentPostId   String
+  contentPost     ContentPost    @relation(fields: [contentPostId], references: [id], onDelete: Cascade)
+  socialAccountId String
+  socialAccount   SocialAccount  @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+
+  @@unique([contentPostId, socialAccountId])
+}
+
+model StatSnapshot {
+  id             String         @id @default(cuid())
+  companyId      String
+  company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  platform       SocialPlatform
+  date           DateTime
+  followers      Int            @default(0)
+  engagementRate Float          @default(0)
+  reach          Int            @default(0)
+  postsCount     Int            @default(0)
+  createdAt      DateTime       @default(now())
+
+  @@unique([companyId, platform, date])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  detail    String?
+  createdAt DateTime @default(now())
+}
