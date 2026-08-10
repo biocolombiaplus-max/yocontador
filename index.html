@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>YoContador — Declaración de Renta 2025 desde $79.000</title>
+<meta name="description" content="¿Debes declarar renta en Colombia 2025? Descúbrelo gratis en 2 minutos. Contadora certificada, tarjeta profesional, desde $79.000 COP."/>
+<style>
+:root{
+  --bg:#FFFFFF;--bg2:#F4FAFC;--bg3:#EBF7FA;
+  --surface:#FFFFFF;--surface2:#F8FCFD;
+  --teal:#0ABFBF;--teal2:#0899A8;--teal3:#06707D;
+  --teal-lt:rgba(10,191,191,.1);
+  --navy:#0D2235;--navy2:#1A3A52;
+  --ink:#0D1F2D;--ink2:#3D5166;--ink3:#8A9DB5;
+  --border:#DFF0F5;--border2:#C4E0E8;--input-bg:#F4FAFC;
+  --green:#10B981;--green-bg:#ECFDF5;
+  --red:#EF4444;--red-bg:#FEF2F2;
+  --shadow:0 8px 32px rgba(13,34,53,.10);
+  --shadow-lg:0 20px 60px rgba(13,34,53,.15);
+  --radius:16px;--radius-lg:24px;--radius-sm:10px;
+  font-size:16px;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#070F18;--bg2:#0C1923;--bg3:#0F2030;--surface:#0D1F2D;
+  --ink:#EBF4FA;--ink2:#7A9BB8;--ink3:#3D5C78;
+  --border:#122233;--border2:#1A3550;--input-bg:#091624;
+  --teal-lt:rgba(10,191,191,.07);
+  --shadow:0 8px 32px rgba(0,0,0,.4);--shadow-lg:0 20px 60px rgba(0,0,0,.5);
+}}
+:root[data-theme="dark"]{
+  --bg:#070F18;--bg2:#0C1923;--bg3:#0F2030;--surface:#0D1F2D;
+  --ink:#EBF4FA;--ink2:#7A9BB8;--ink3:#3D5C78;
+  --border:#122233;--border2:#1A3550;--input-bg:#091624;
+  --teal-lt:rgba(10,191,191,.07);
+  --shadow:0 8px 32px rgba(0,0,0,.4);--shadow-lg:0 20px 60px rgba(0,0,0,.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;min-height:100vh;overflow-x:hidden}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Animations */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{transform:translateX(-100%) skewX(-20deg)}100%{transform:translateX(300%) skewX(-20deg)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(10,191,191,.5)}50%{box-shadow:0 0 0 6px rgba(10,191,191,0)}}
+@keyframes gradShift{0%{background-position:0}100%{background-position:200% 0}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,4vw,3rem);height:64px;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .3s,box-shadow .3s}
+[data-theme="dark"] nav{background:rgba(7,15,24,.85)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#0ABFBF,#0899A8);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;box-shadow:0 4px 14px rgba(10,191,191,.4);position:relative;overflow:hidden}
+.logo-mark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent)}
+.logo-text{font-weight:800;font-size:1rem;letter-spacing:-.02em;color:var(--ink)}
+.logo-text em{color:var(--teal);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--ink2);transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--teal);border-radius:2px;transition:width .25s}
+.nav-links a:hover{color:var(--teal)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:10px 22px;border-radius:50px;font-size:.84rem;font-weight:700;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;box-shadow:0 4px 18px rgba(10,191,191,.4);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.nav-cta::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.2);transform:skewX(-20deg);transition:left .4s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(10,191,191,.5)}
+.nav-cta:hover::before{left:150%}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--ink2);transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px clamp(1rem,4vw,2rem) 60px;text-align:center;position:relative;overflow:hidden}
+.hero-orb1,.hero-orb2{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);opacity:.18}
+.hero-orb1{width:600px;height:600px;background:radial-gradient(circle,#0ABFBF,transparent 70%);top:-200px;right:-100px}
+.hero-orb2{width:400px;height:400px;background:radial-gradient(circle,#0899A8,transparent 70%);bottom:-100px;left:-100px}
+[data-theme="dark"] .hero-orb1,[data-theme="dark"] .hero-orb2{opacity:.1}
+.badge-pill{display:inline-flex;align-items:center;gap:8px;background:var(--teal-lt);border:1px solid rgba(10,191,191,.3);color:var(--teal3);font-size:.75rem;font-weight:700;padding:6px 16px;border-radius:50px;margin-bottom:1.75rem;letter-spacing:.06em;text-transform:uppercase;animation:fadeDown .5s ease both}
+.badge-pill .pulse{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+.hero h1{font-size:clamp(2.4rem,6vw,4.8rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;color:var(--ink);text-wrap:balance;margin-bottom:.8rem;animation:fadeUp .6s .1s ease both}
+.hero h1 .grad{background:linear-gradient(135deg,#0ABFBF,#0899A8,#006B8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--ink2);max-width:500px;margin:0 auto 2.5rem;line-height:1.75;animation:fadeUp .6s .2s ease both}
+.hero-sub strong{color:var(--ink)}
+
+/* CALCULATOR CARD */
+.calc-wrap{animation:fadeUp .6s .3s ease both;width:100%;max-width:620px}
+.calc-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:clamp(1.75rem,4vw,2.75rem);box-shadow:var(--shadow-lg);text-align:left;position:relative;overflow:hidden}
+.calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0ABFBF,#0899A8,#0ABFBF);background-size:200%;animation:gradShift 3s linear infinite}
+.calc-progress{display:flex;gap:5px;margin-bottom:2rem}
+.prog-dot{flex:1;height:5px;border-radius:3px;background:var(--border2);transition:background .5s}
+.prog-dot.done{background:linear-gradient(90deg,#0ABFBF,#0899A8)}
+.prog-dot.active{background:rgba(10,191,191,.4)}
+.calc-step{display:none}
+.calc-step.visible{display:block;animation:fadeUp .35s ease both}
+.step-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+.step-q{font-size:1.2rem;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:.4rem;text-wrap:balance}
+.step-hint{font-size:.83rem;color:var(--ink3);margin-bottom:1.5rem;line-height:1.55}
+.yn-group{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem}
+.yn-btn{padding:14px 12px;border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;border:1.5px solid var(--border2);background:var(--bg2);color:var(--ink2);transition:all .22s;text-align:center;line-height:1.3}
+.yn-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt)}
+.yn-btn.selected{border-color:var(--teal);background:var(--teal-lt);color:var(--teal3);box-shadow:0 0 18px rgba(10,191,191,.15)}
+.field-label{font-size:.73rem;font-weight:700;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.45rem;display:block}
+.field-input{width:100%;padding:13px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border2);background:var(--input-bg);color:var(--ink);font-size:.95rem;transition:border .2s,box-shadow .2s}
+.field-input:focus{border-color:var(--teal);background:var(--surface);outline:none;box-shadow:0 0 0 4px rgba(10,191,191,.1)}
+.field-row{margin-bottom:1.25rem}
+.calc-actions{display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:14px 28px;border-radius:50px;font-size:.95rem;font-weight:700;background:linear-gradient(135deg,#0ABFBF 0%,#0899A8 60%,#06707D 100%);color:#fff;box-shadow:0 4px 20px rgba(10,191,191,.4);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;white-space:nowrap}
+.btn-primary::after{content:'';position:absolute;top:-50%;left:-60%;width:35%;height:200%;background:rgba(255,255,255,.25);transform:skewX(-20deg);animation:shimmer 3.5s infinite}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(10,191,191,.55)}
+.btn-primary:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.btn-primary:disabled::after{display:none}
+.btn-secondary{padding:14px 22px;border-radius:50px;font-size:.88rem;font-weight:600;background:var(--bg2);color:var(--ink2);border:1.5px solid var(--border2);transition:all .2s}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt)}
+.btn-wide{flex:1}
+
+/* RESULTS */
+.result-yes,.result-no{display:none;animation:fadeUp .4s ease both}
+.result-yes.show,.result-no.show{display:block}
+.result-banner{padding:18px 20px;border-radius:14px;display:flex;align-items:flex-start;gap:14px;margin-bottom:1.5rem}
+.yes-banner{background:linear-gradient(135deg,rgba(10,191,191,.07),rgba(8,153,168,.05));border:1.5px solid rgba(10,191,191,.28)}
+.no-banner{background:var(--green-bg);border:1.5px solid rgba(16,185,129,.3)}
+.result-icon{font-size:1.8rem;flex-shrink:0;margin-top:2px}
+.result-title{font-size:1.1rem;font-weight:800;margin-bottom:4px;letter-spacing:-.02em}
+.yes-banner .result-title{color:var(--teal3)}
+.no-banner .result-title{color:var(--green)}
+.result-desc{font-size:.84rem;color:var(--ink2);line-height:1.6}
+.offer-box{background:linear-gradient(135deg,#0D2235,#1A3A52);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.offer-box::before{content:'';position:absolute;top:-80px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(10,191,191,.1);filter:blur(40px)}
+.offer-label{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;position:relative;z-index:1}
+.offer-title{font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:.25rem;letter-spacing:-.03em;position:relative;z-index:1}
+.offer-title span{color:#0ABFBF}
+.offer-sub{font-size:.83rem;color:rgba(255,255,255,.6);margin-bottom:1.25rem;line-height:1.6;position:relative;z-index:1}
+.offer-features{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem;position:relative;z-index:1}
+.offer-feat{display:flex;align-items:center;gap:.6rem;font-size:.83rem;color:rgba(255,255,255,.82)}
+.feat-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;background:rgba(10,191,191,.2);border:1px solid rgba(10,191,191,.4);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:#0ABFBF}
+.btn-declare{width:100%;padding:16px;border-radius:50px;font-size:1rem;font-weight:800;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;box-shadow:0 4px 24px rgba(10,191,191,.5);transition:all .25s;position:relative;overflow:hidden;z-index:1}
+.btn-declare::after{content:'';position:absolute;top:-50%;left:-60%;width:35%;height:200%;background:rgba(255,255,255,.2);transform:skewX(-20deg);animation:shimmer 3s infinite}
+.btn-declare:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(10,191,191,.65)}
+.trust-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+.trust-chip{display:flex;align-items:center;gap:.4rem;font-size:.74rem;color:var(--ink3);background:var(--bg2);border:1px solid var(--border2);border-radius:50px;padding:4px 11px}
+.trust-chip span{color:var(--teal);font-size:.72rem}
+
+/* SECTIONS */
+.section{padding:clamp(4rem,8vw,7rem) clamp(1rem,4vw,2rem);position:relative}
+.section-inner{max-width:1120px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
+.eyebrow::before{content:'';width:20px;height:2px;border-radius:2px;background:var(--teal);display:block}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;text-wrap:balance;margin-bottom:1.1rem}
+.section-sub{font-size:1rem;color:var(--ink2);max-width:520px;line-height:1.75}
+
+/* SERVICES */
+.services-section{background:var(--bg2)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;margin-top:2.75rem}
+.service-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:all .28s;position:relative;overflow:hidden}
+.service-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:var(--shadow)}
+.service-card.featured{background:linear-gradient(145deg,#0D2235,#1A3A52);border-color:transparent;box-shadow:var(--shadow-lg)}
+.service-card.featured .svc-name{color:#fff}
+.service-card.featured .svc-body{color:rgba(255,255,255,.55)}
+.service-card.featured .svc-price{color:#0ABFBF}
+.service-card.featured .svc-icon-wrap{background:rgba(10,191,191,.15)}
+.svc-icon-wrap{width:46px;height:46px;border-radius:12px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.1rem;transition:box-shadow .25s}
+.service-card:hover .svc-icon-wrap{box-shadow:0 0 20px rgba(10,191,191,.25)}
+.svc-badge{display:inline-block;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;font-size:.66rem;font-weight:800;padding:3px 10px;border-radius:50px;margin-bottom:.85rem;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 2px 10px rgba(10,191,191,.35)}
+.svc-name{font-weight:800;font-size:1rem;margin-bottom:.45rem;letter-spacing:-.02em}
+.svc-body{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:1rem}
+.svc-price{font-weight:800;font-size:1.1rem;color:var(--ink)}
+.svc-price .desde{font-size:.72rem;font-weight:500;color:var(--ink3);margin-right:2px}
+
+/* HOW */
+.steps-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2.5rem;margin-top:3.5rem;position:relative}
+.steps-row::before{content:'';position:absolute;top:26px;left:13%;right:13%;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
+.step-item{text-align:center}
+.step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;box-shadow:0 6px 20px rgba(10,191,191,.35);position:relative}
+.step-num::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(10,191,191,.22)}
+.step-title{font-weight:800;font-size:.95rem;margin-bottom:.5rem;letter-spacing:-.01em}
+.step-body{font-size:.83rem;color:var(--ink2);line-height:1.65}
+
+/* TRUST */
+.trust-section{background:linear-gradient(135deg,#0D2235,#1A3A52);padding:clamp(4rem,7vw,6rem) clamp(1rem,4vw,2rem);position:relative;overflow:hidden}
+.trust-section::before{content:'';position:absolute;top:-200px;right:-100px;width:500px;height:500px;border-radius:50%;background:rgba(10,191,191,.05);filter:blur(80px)}
+.trust-inner{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
+.trust-section .section-title{color:#fff}
+.trust-section .section-sub{color:rgba(255,255,255,.55)}
+.trust-items{display:flex;flex-direction:column;gap:1.25rem;margin-top:2rem}
+.trust-item{display:flex;align-items:flex-start;gap:1rem}
+.trust-icon{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:rgba(10,191,191,.15);border:1px solid rgba(10,191,191,.3);display:flex;align-items:center;justify-content:center;color:#0ABFBF;font-size:.8rem;margin-top:1px}
+.trust-t{font-weight:700;font-size:.9rem;color:#fff;margin-bottom:3px}
+.trust-body{font-size:.81rem;color:rgba(255,255,255,.5);line-height:1.55}
+.cred-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:2rem;backdrop-filter:blur(10px)}
+.cred-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0ABFBF,#0899A8);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.4rem;color:#fff;margin-bottom:1.1rem;box-shadow:0 4px 20px rgba(10,191,191,.35)}
+.cred-name{font-weight:800;font-size:1.05rem;color:#fff;margin-bottom:2px;letter-spacing:-.02em}
+.cred-title{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:1.1rem}
+.cred-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(10,191,191,.12);border:1px solid rgba(10,191,191,.25);color:#0ABFBF;font-size:.74rem;font-weight:700;padding:5px 14px;border-radius:50px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.stat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.1rem;text-align:center;transition:border-color .25s}
+.stat-box:hover{border-color:rgba(10,191,191,.3)}
+.stat-n{font-size:1.6rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,#0ABFBF,#0899A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:3px;line-height:1.3}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:.75rem;margin-top:2.75rem;max-width:720px}
+.faq-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .25s}
+.faq-item:hover,.faq-item.open{border-color:rgba(10,191,191,.35)}
+.faq-q{width:100%;text-align:left;padding:1.1rem 1.5rem;font-weight:700;font-size:.9rem;background:none;border:none;cursor:pointer;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s;letter-spacing:-.01em}
+.faq-q:hover,.faq-item.open .faq-q{color:var(--teal)}
+.faq-icon{width:24px;height:24px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;color:var(--ink3);transition:transform .25s,background .25s}
+.faq-item.open .faq-icon{transform:rotate(180deg);background:var(--teal-lt);color:var(--teal)}
+.faq-a{font-size:.85rem;color:var(--ink2);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s ease;padding:0 1.5rem}
+.faq-item.open .faq-a{max-height:300px;padding:0 1.5rem 1.25rem}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,#0ABFBF,#0899A8,#06707D);padding:clamp(4rem,7vw,6rem) clamp(1rem,4vw,2rem);text-align:center;position:relative;overflow:hidden}
+.cta-section h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:.75rem;letter-spacing:-.04em;text-wrap:balance;position:relative;z-index:1}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.75);margin-bottom:2.25rem;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative;z-index:1}
+.btn-cta-big{display:inline-flex;align-items:center;gap:.6rem;padding:18px 40px;border-radius:50px;font-size:1.05rem;font-weight:800;background:#fff;color:var(--teal3);box-shadow:0 8px 32px rgba(0,0,0,.15);transition:all .25s;letter-spacing:-.02em;position:relative;z-index:1}
+.btn-cta-big:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(0,0,0,.2)}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem clamp(1rem,4vw,3rem)}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem}
+.footer-logo{font-weight:800;font-size:.9rem;letter-spacing:-.02em;color:var(--ink2)}
+.footer-logo em{color:var(--teal);font-style:normal}
+.footer-links{display:flex;gap:2rem;flex-wrap:wrap}
+.footer-links a{font-size:.82rem;color:var(--ink3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:.75rem;color:var(--ink3);width:100%}
+
+/* MODAL (client form) */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(13,34,53,.65);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex;animation:fadeIn .2s ease}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:clamp(1.75rem,4vw,2.75rem);max-width:580px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);position:relative;animation:slideUp .3s ease both;border:1px solid var(--border)}
+.modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;background:var(--bg2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--ink2);transition:all .2s}
+.modal-close:hover{background:var(--teal-lt);color:var(--teal)}
+.modal-eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}
+.modal-title{font-size:1.5rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.03em}
+.modal-sub{font-size:.85rem;color:var(--ink2);margin-bottom:1.75rem;line-height:1.65}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-grid .full{grid-column:1/-1}
+.field-select{width:100%;padding:13px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border2);background:var(--input-bg);color:var(--ink);font-size:.9rem;transition:border .2s,box-shadow .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 4.5L11 1' stroke='%238A9DB5' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.field-select:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 4px rgba(10,191,191,.1)}
+.checkbox-row{display:flex;align-items:flex-start;gap:.75rem;cursor:pointer}
+.checkbox-row input[type=checkbox]{width:16px;height:16px;margin-top:3px;accent-color:var(--teal);cursor:pointer;flex-shrink:0}
+.checkbox-label{font-size:.82rem;color:var(--ink2);line-height:1.55}
+.price-summary{background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1.5px solid var(--border2);border-radius:var(--radius);padding:1.1rem 1.4rem;margin:1.5rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.price-label{font-size:.83rem;color:var(--ink2);font-weight:600}
+.price-sub{font-size:.72rem;color:var(--ink3);margin-top:2px}
+.price-amount{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#0ABFBF,#0899A8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.btn-submit{width:100%;padding:16px;border-radius:50px;font-size:1rem;font-weight:800;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;box-shadow:0 4px 22px rgba(10,191,191,.4);transition:all .25s;position:relative;overflow:hidden}
+.btn-submit::after{content:'';position:absolute;top:-50%;left:-60%;width:35%;height:200%;background:rgba(255,255,255,.2);transform:skewX(-20deg);animation:shimmer 3.5s 1s infinite}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 34px rgba(10,191,191,.55)}
+.btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.form-disclaimer{font-size:.74rem;color:var(--ink3);text-align:center;margin-top:.85rem;line-height:1.55}
+
+/* ADMIN OVERLAY */
+.admin-overlay{position:fixed;inset:0;z-index:600;background:rgba(7,15,24,.78);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:1rem}
+.admin-overlay.open{display:flex;animation:fadeIn .2s ease}
+.admin-modal{background:var(--surface);border-radius:var(--radius-lg);max-width:1060px;width:100%;max-height:92vh;overflow:hidden;box-shadow:var(--shadow-lg);animation:slideUp .3s ease both;border:1px solid var(--border);display:flex;flex-direction:column}
+.admin-head{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.6rem;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0}
+.admin-title-row{display:flex;align-items:center;gap:.75rem}
+.admin-title{font-size:1.05rem;font-weight:800;letter-spacing:-.03em}
+.admin-badge{font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;padding:3px 10px;border-radius:50px}
+.admin-close{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--ink2);cursor:pointer;font-size:1rem;transition:all .2s}
+.admin-close:hover{background:var(--teal-lt);color:var(--teal);border-color:var(--teal)}
+.admin-body{overflow-y:auto;flex:1;padding:1.6rem}
+
+/* LOGIN */
+.login-wrap{max-width:380px;margin:1rem auto;text-align:center;padding:1.5rem 0}
+.login-title{font-size:1.3rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.03em}
+.login-sub{font-size:.83rem;color:var(--ink2);margin-bottom:2rem;line-height:1.6}
+.login-err{font-size:.82rem;color:var(--red);margin-top:.75rem;display:none;background:var(--red-bg);padding:10px 14px;border-radius:10px;border:1px solid rgba(239,68,68,.2)}
+
+/* CRM */
+.crm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.4rem}
+.crm-stat{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.85rem 1rem;text-align:center;transition:border-color .25s}
+.crm-stat:hover{border-color:rgba(10,191,191,.35)}
+.crm-stat-n{font-size:1.4rem;font-weight:800;letter-spacing:-.04em}
+.crm-stat-l{font-size:.69rem;color:var(--ink3);margin-top:3px}
+.crm-toolbar{display:flex;gap:.65rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.crm-search{flex:1;min-width:180px}
+.table-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1.5px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:720px}
+thead{background:var(--bg2)}
+th{padding:.75rem 1rem;text-align:left;font-size:.67rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+td{padding:.82rem 1rem;font-size:.82rem;border-top:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:rgba(10,191,191,.03)}
+.chip{display:inline-flex;align-items:center;gap:.3rem;padding:4px 10px;border-radius:50px;font-size:.67rem;font-weight:800;white-space:nowrap}
+.chip-new{background:rgba(10,191,191,.1);color:var(--teal3)}
+.chip-paid{background:rgba(16,185,129,.12);color:var(--green)}
+.chip-proc{background:rgba(245,158,11,.1);color:#b45309}
+.chip-done{background:rgba(79,70,229,.1);color:#4338ca}
+[data-theme="dark"] .chip-done{background:rgba(139,122,255,.1);color:#a5b4fc}
+[data-theme="dark"] .chip-proc{background:rgba(245,158,11,.1);color:#fbbf24}
+.act-btns{display:flex;gap:.35rem}
+.act-btn{padding:5px 11px;border-radius:50px;font-size:.69rem;font-weight:700;border:1px solid var(--border2);background:var(--surface);color:var(--ink2);transition:all .2s;white-space:nowrap;cursor:pointer}
+.act-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt)}
+.act-btn.wa{border-color:rgba(37,211,102,.35);color:#15803d}
+.act-btn.wa:hover{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.6)}
+.act-btn.view{border-color:rgba(10,191,191,.35);color:var(--teal3)}
+.act-btn.view:hover{background:var(--teal-lt)}
+
+/* DETAIL PANEL */
+.detail-overlay{position:fixed;inset:0;z-index:700;background:rgba(7,15,24,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:1rem}
+.detail-overlay.open{display:flex;animation:fadeIn .2s ease}
+.detail-panel{background:var(--surface);border-radius:var(--radius-lg);max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:slideUp .3s ease both;border:1px solid var(--border)}
+.detail-head{padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2);position:sticky;top:0;z-index:1}
+.detail-title{font-size:1rem;font-weight:800;letter-spacing:-.02em}
+.detail-close{width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2);transition:all .2s;font-size:.95rem}
+.detail-close:hover{background:var(--teal-lt);color:var(--teal)}
+.detail-body{padding:1.4rem}
+.detail-block{margin-bottom:1.5rem}
+.detail-block-title{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.info-cell{background:var(--bg2);border-radius:10px;padding:.75rem 1rem}
+.info-label{font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+.info-val{font-size:.88rem;font-weight:600;color:var(--ink)}
+.msg-textarea{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border2);background:var(--input-bg);color:var(--ink);font-size:.83rem;line-height:1.7;resize:vertical;min-height:100px;transition:border .2s;font-family:system-ui}
+.msg-textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(10,191,191,.1)}
+.msg-actions{display:flex;gap:.55rem;margin-top:.65rem;flex-wrap:wrap}
+.btn-small{display:inline-flex;align-items:center;gap:.4rem;padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:700;border:1.5px solid var(--border2);background:var(--surface);color:var(--ink2);transition:all .2s;cursor:pointer;white-space:nowrap}
+.btn-small:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt)}
+.btn-small.copied{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+.btn-wa{display:inline-flex;align-items:center;gap:.4rem;padding:10px 20px;border-radius:50px;font-size:.82rem;font-weight:700;background:#25D366;color:#fff;border:none;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(37,211,102,.35)}
+.btn-wa:hover{transform:translateY(-1px);box-shadow:0 5px 20px rgba(37,211,102,.5)}
+.btn-email{display:inline-flex;align-items:center;gap:.4rem;padding:10px 20px;border-radius:50px;font-size:.82rem;font-weight:700;background:linear-gradient(135deg,#0ABFBF,#0899A8);color:#fff;border:none;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(10,191,191,.35)}
+.btn-email:hover{transform:translateY(-1px);box-shadow:0 5px 20px rgba(10,191,191,.5)}
+.status-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.65rem}
+.status-opt{padding:7px 14px;border-radius:50px;font-size:.74rem;font-weight:700;border:1.5px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .2s}
+.status-opt:hover{border-color:var(--teal);color:var(--teal)}
+.status-opt.active{border-color:var(--teal);background:var(--teal-lt);color:var(--teal3)}
+.notas-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border2);background:var(--input-bg);color:var(--ink);font-size:.85rem;resize:vertical;min-height:60px;transition:border .2s;font-family:system-ui}
+.notas-input:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(10,191,191,.1)}
+.btn-save{margin-top:.55rem;padding:8px 20px;border-radius:50px;font-size:.8rem;font-weight:700;background:var(--teal);color:#fff;border:none;cursor:pointer;transition:background .2s}
+.btn-save:hover{background:var(--teal2)}
+.saved-ok{display:none;font-size:.75rem;color:var(--green);margin-top:.4rem}
+
+/* WhatsApp float */
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:300;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,.5);transition:all .25s}
+.wa-float:hover{transform:scale(1.12);box-shadow:0 8px 36px rgba(37,211,102,.6)}
+.wa-float svg{width:30px;height:30px;fill:#fff}
+
+/* Responsive */
+@media(max-width:900px){.trust-inner{grid-template-columns:1fr;gap:3rem}}
+@media(max-width:768px){.nav-links{display:none}.form-grid{grid-template-columns:1fr}.crm-stats{grid-template-columns:1fr 1fr}.steps-row::before{display:none}}
+@media(max-width:480px){.yn-group{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}.crm-stats{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">YC</div>
+    <span class="logo-text">Yo<em>Contador</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#preguntas">Preguntas</a>
+    <a href="#" onclick="openAdmin(event)">Acceso Contador</a>
+  </div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <button class="theme-btn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
+    <a href="#calculadora" class="nav-cta">Verificar gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-orb1"></div><div class="hero-orb2"></div>
+  <div class="badge-pill"><span class="pulse"></span>Temporada declaración de renta 2025 — abierta ahora</div>
+  <h1>¿Debes declarar<br><span class="grad">renta este año?</span></h1>
+  <p class="hero-sub">Descúbrelo <strong>gratis en 2 minutos</strong>. Si debes declarar, lo hacemos por ti desde <strong>$79.000</strong> — contadora certificada, tarjeta profesional vigente.</p>
+
+  <div class="calc-wrap">
+  <div class="calc-card" id="calculadora">
+    <div class="calc-progress">
+      <div class="prog-dot active" id="p1"></div><div class="prog-dot" id="p2"></div>
+      <div class="prog-dot" id="p3"></div><div class="prog-dot" id="p4"></div>
+    </div>
+
+    <div class="calc-step visible" id="step1">
+      <div class="step-label">Paso 1 de 4</div>
+      <div class="step-q">¿Cuáles fueron tus ingresos totales en el año 2025?</div>
+      <div class="step-hint">Incluye salario, honorarios, arriendos, pensión o cualquier ingreso recibido durante el año 2025.</div>
+      <div class="field-row">
+        <label class="field-label">Ingresos totales aproximados</label>
+        <input type="text" class="field-input" id="inp-ingresos" placeholder="Ej: 45.000.000" oninput="formatNum(this)" autocomplete="off"/>
+      </div>
+      <div class="field-row">
+        <label class="field-label">¿No recuerdas el valor? Elige un rango</label>
+        <div class="yn-group" id="range-btns">
+          <button class="yn-btn" onclick="selectRange(this,'25000000')">Menos de $30M</button>
+          <button class="yn-btn" onclick="selectRange(this,'50000000')">$30M – $65M</button>
+          <button class="yn-btn" onclick="selectRange(this,'70000000')">$65M – $100M</button>
+          <button class="yn-btn" onclick="selectRange(this,'150000000')">Más de $100M</button>
+        </div>
+      </div>
+      <div class="calc-actions">
+        <button class="btn-primary btn-wide" onclick="goStep(2)" id="btn1" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <div class="calc-step" id="step2">
+      <div class="step-label">Paso 2 de 4</div>
+      <div class="step-q">¿Tu patrimonio total supera $224 millones?</div>
+      <div class="step-hint">Suma casa, vehículos, cuentas bancarias, inversiones y negocios. Valor al 31 de diciembre de 2025.</div>
+      <div class="yn-group" id="pat-btns">
+        <button class="yn-btn" onclick="selectYN('patrimonio','si',this)">Sí, supera $224M</button>
+        <button class="yn-btn" onclick="selectYN('patrimonio','no',this)">No / No estoy seguro</button>
+      </div>
+      <div class="calc-actions">
+        <button class="btn-secondary" onclick="goStep(1)">← Volver</button>
+        <button class="btn-primary btn-wide" onclick="goStep(3)" id="btn2" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <div class="calc-step" id="step3">
+      <div class="step-label">Paso 3 de 4</div>
+      <div class="step-q">¿Tus compras con tarjeta de crédito o débito superaron $70 millones en 2025?</div>
+      <div class="step-hint">Considera el total acumulado de todas tus tarjetas durante el año.</div>
+      <div class="yn-group" id="tc-btns">
+        <button class="yn-btn" onclick="selectYN('tarjeta','si',this)">Sí, más de $70M</button>
+        <button class="yn-btn" onclick="selectYN('tarjeta','no',this)">No / No recuerdo</button>
+      </div>
+      <div class="calc-actions">
+        <button class="btn-secondary" onclick="goStep(2)">← Volver</button>
+        <button class="btn-primary btn-wide" onclick="goStep(4)" id="btn3" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <div class="calc-step" id="step4">
+      <div class="step-label">Paso 4 de 4</div>
+      <div class="step-q">¿Las consignaciones y transferencias a tus cuentas superaron $70 millones en 2025?</div>
+      <div class="step-hint">Cuenta todo el dinero que entró a tus cuentas bancarias durante el año.</div>
+      <div class="yn-group" id="cons-btns">
+        <button class="yn-btn" onclick="selectYN('consig','si',this)">Sí, más de $70M</button>
+        <button class="yn-btn" onclick="selectYN('consig','no',this)">No superaron $70M</button>
+      </div>
+      <div class="calc-actions">
+        <button class="btn-secondary" onclick="goStep(3)">← Volver</button>
+        <button class="btn-primary btn-wide" onclick="calcResult()" id="btn4" disabled>Ver mi resultado →</button>
+      </div>
+    </div>
+
+    <!-- RESULT YES -->
+    <div class="result-yes" id="result-yes">
+      <div class="result-banner yes-banner">
+        <div class="result-icon">📋</div>
+        <div>
+          <div class="result-title">Debes declarar renta 2025</div>
+          <div class="result-desc">Según tus datos superas al menos uno de los topes que exige la DIAN. No te preocupes — nosotros lo hacemos por ti, rápido y con todo legal.</div>
+        </div>
+      </div>
+      <div class="offer-box">
+        <div class="offer-label">✦ Oferta especial temporada</div>
+        <div class="offer-title">Tu declaración por <span>$79.000</span></div>
+        <div class="offer-sub">Contadora con tarjeta profesional vigente. Todo ante la DIAN, sin que tengas que moverte de tu casa.</div>
+        <div class="offer-features">
+          <div class="offer-feat"><div class="feat-check">✓</div>Revisión de ingresos y retenciones</div>
+          <div class="offer-feat"><div class="feat-check">✓</div>Cálculo del impuesto o saldo a favor</div>
+          <div class="offer-feat"><div class="feat-check">✓</div>Presentación oficial ante la DIAN</div>
+          <div class="offer-feat"><div class="feat-check">✓</div>Formulario firmado a tu correo y WhatsApp</div>
+          <div class="offer-feat"><div class="feat-check">✓</div>Asesoría si recibes requerimiento de la DIAN</div>
+        </div>
+        <button class="btn-declare" onclick="openClientForm()">Quiero hacer mi declaración →</button>
+      </div>
+      <div class="trust-chips">
+        <div class="trust-chip"><span>🔒</span> Datos seguros</div>
+        <div class="trust-chip"><span>🎓</span> Contadora certificada</div>
+        <div class="trust-chip"><span>⚡</span> Entrega 24–48h</div>
+        <div class="trust-chip"><span>💬</span> Soporte WhatsApp</div>
+      </div>
+      <div style="margin-top:.85rem;text-align:right"><button onclick="resetCalc()" style="font-size:.78rem;color:var(--ink3);background:none;border:none;cursor:pointer">↩ Calcular de nuevo</button></div>
+    </div>
+
+    <!-- RESULT NO -->
+    <div class="result-no" id="result-no">
+      <div class="result-banner no-banner">
+        <div class="result-icon">✅</div>
+        <div>
+          <div class="result-title">Probablemente no debes declarar</div>
+          <div class="result-desc">Según lo que indicaste, estarías por debajo de los topes de la DIAN. Sin embargo, declarar voluntariamente puede ser muy conveniente si tienes saldo a favor.</div>
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--radius);padding:1.4rem;margin-bottom:1rem">
+        <div style="font-weight:800;font-size:.92rem;margin-bottom:.45rem">¿Quieres que lo confirmemos con certeza?</div>
+        <div style="font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:1.1rem">Por solo $29.000 nuestra contadora revisa tu situación directamente en la DIAN y te entrega un concepto escrito.</div>
+        <button class="btn-declare" onclick="openClientForm()" style="background:linear-gradient(135deg,#10B981,#059669)">Solicitar verificación — $29.000 →</button>
+      </div>
+      <div style="font-size:.82rem;color:var(--ink2);text-align:center;margin-bottom:.75rem">¿Quieres declarar voluntariamente para recuperar retenciones?</div>
+      <button onclick="openClientForm()" style="width:100%;padding:14px;border-radius:50px;font-size:.9rem;font-weight:700;border:1.5px solid var(--teal);background:var(--teal-lt);color:var(--teal3);transition:all .2s;cursor:pointer">Hacer declaración voluntaria — $79.000</button>
+      <div style="margin-top:.75rem;text-align:right"><button onclick="resetCalc()" style="font-size:.78rem;color:var(--ink3);background:none;border:none;cursor:pointer">↩ Calcular de nuevo</button></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-section" id="servicios">
+  <div class="section-inner">
+    <div class="eyebrow">Todos nuestros servicios</div>
+    <h2 class="section-title">Una contadora para<br>todo lo que necesitas</h2>
+    <p class="section-sub">Además de la declaración de renta, te acompañamos con todos tus trámites contables y tributarios.</p>
+    <div class="services-grid">
+      <div class="service-card featured">
+        <div class="svc-badge">🔥 Temporada 2025</div>
+        <div class="svc-icon-wrap">📋</div>
+        <div class="svc-name">Declaración de Renta</div>
+        <div class="svc-body">Personas naturales asalariadas, independientes o mixtas. Cálculo correcto, presentación ante la DIAN y entrega digital.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$79.000</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon-wrap">💼</div>
+        <div class="svc-name">Declaración IVA / Retención</div>
+        <div class="svc-body">Para responsables de IVA y agentes de retención. Mensual, bimestral o cuatrimestral según tu obligación.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$120.000</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon-wrap">📊</div>
+        <div class="svc-name">Contabilidad mensual</div>
+        <div class="svc-body">Registro de ingresos y gastos, estados financieros y asesoría permanente para tu empresa o negocio.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$280.000/mes</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon-wrap">🏢</div>
+        <div class="svc-name">Constitución de empresa</div>
+        <div class="svc-body">SAS, empresa unipersonal, sociedad. Incluye RUT, matrícula mercantil y asesoría inicial completa.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$350.000</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon-wrap">📄</div>
+        <div class="svc-name">Medios magnéticos</div>
+        <div class="svc-body">Preparación y envío de información exógena a la DIAN para personas naturales y jurídicas obligadas.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$200.000</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon-wrap">🔍</div>
+        <div class="svc-name">Revisión y corrección</div>
+        <div class="svc-body">¿Ya declaraste y crees que algo está mal? Revisamos tu declaración y presentamos corrección si aplica.</div>
+        <div class="svc-price"><span class="desde">Desde </span>$150.000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="como-funciona">
+  <div class="section-inner">
+    <div class="eyebrow">Proceso</div>
+    <h2 class="section-title">Tan fácil como enviar<br>un WhatsApp</h2>
+    <div class="steps-row">
+      <div class="step-item"><div class="step-num">1</div><div class="step-title">Completas el formulario</div><div class="step-body">Nos das tus datos básicos: nombre, cédula, correo y WhatsApp. Nada más por ahora.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-title">Realizas el pago</div><div class="step-body">$79.000 por Nequi, Daviplata, PSE o transferencia. Confirmación inmediata.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-title">La contadora trabaja</div><div class="step-body">Consultamos tus datos en la DIAN y verificamos certificados de ingresos y retenciones.</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-title">Recibes tu declaración</div><div class="step-body">En 24–48 horas hábiles te enviamos el formulario firmado por correo y WhatsApp.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-section">
+  <div class="trust-inner">
+    <div>
+      <div class="eyebrow" style="color:var(--teal)">¿Por qué elegirnos?</div>
+      <h2 class="section-title">Tu dinero y tus datos en manos profesionales</h2>
+      <p class="section-sub">No somos un chatbot ni una app genérica. Somos contadores reales con tarjeta profesional vigente.</p>
+      <div class="trust-items">
+        <div class="trust-item"><div class="trust-icon">✓</div><div><div class="trust-t">Contadora con tarjeta profesional vigente</div><div class="trust-body">Inscrita ante la Junta Central de Contadores. Número de tarjeta verificable en línea.</div></div></div>
+        <div class="trust-item"><div class="trust-icon">✓</div><div><div class="trust-t">Responsabilidad legal por cada declaración</div><div class="trust-body">Firmamos la declaración con nuestro registro profesional. Si hay un error, respondemos.</div></div></div>
+        <div class="trust-item"><div class="trust-icon">✓</div><div><div class="trust-t">Tus datos no se venden ni se comparten</div><div class="trust-body">Toda tu información es confidencial y solo se usa para preparar tu declaración.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="cred-card">
+        <div class="cred-avatar">M</div>
+        <div class="cred-name">Martha Rodríguez Ávila</div>
+        <div class="cred-title">Contadora Pública Certificada</div>
+        <div class="cred-badge">🎓 Tarjeta Profesional Vigente</div>
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-n">+800</div><div class="stat-l">Declaraciones presentadas</div></div>
+          <div class="stat-box"><div class="stat-n">8 años</div><div class="stat-l">de experiencia</div></div>
+          <div class="stat-box"><div class="stat-n">24–48h</div><div class="stat-l">Tiempo de entrega</div></div>
+          <div class="stat-box"><div class="stat-n">100%</div><div class="stat-l">Legal ante la DIAN</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="preguntas">
+  <div class="section-inner">
+    <div class="eyebrow">Preguntas frecuentes</div>
+    <h2 class="section-title">Resolvemos tus dudas</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cuáles son los topes para declarar renta en Colombia 2025? <div class="faq-icon">▾</div></button><div class="faq-a">Debes declarar si en el año 2025 tuviste: ingresos brutos superiores a $69.7 millones (1.400 UVT), patrimonio bruto superior a $224 millones (4.500 UVT), consumos con tarjeta superiores a $69.7 millones, o consignaciones bancarias superiores a $69.7 millones. Si cumples cualquiera de estas condiciones, estás obligado a declarar.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si no declaro estando obligado? <div class="faq-icon">▾</div></button><div class="faq-a">La DIAN puede imponerte una sanción del 5% de los ingresos brutos por cada mes de mora, sin superar el 100%. Además, puede exigirte presentar con intereses y sanciones adicionales. Es mucho mejor declarar a tiempo y en regla.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito enviar documentos físicos? <div class="faq-icon">▾</div></button><div class="faq-a">No. Todo es digital. Con tu número de cédula y autorización consultamos tu información en la DIAN. Si tienes certificados de ingresos y retenciones, puedes enviárnoslos por WhatsApp en foto o PDF.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo declarar aunque no estaba obligado? ¿Para qué me sirve? <div class="faq-icon">▾</div></button><div class="faq-a">Sí. La declaración voluntaria te permite recuperar retenciones en la fuente que te descontaron en nómina u honorarios. Si tus retenciones superan el impuesto calculado, la DIAN te devuelve la diferencia. Muchas personas reciben entre $500.000 y $3.000.000 de devolución.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cuándo es la fecha límite para declarar en 2026? <div class="faq-icon">▾</div></button><div class="faq-a">Para personas naturales la DIAN establecerá el calendario oficial. Históricamente el plazo va de agosto a octubre, según los dos últimos dígitos de la cédula. No esperes al último momento — mientras antes declares, mejor atención recibes y más tiempo tienes si hay correcciones.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Cuánto cuesta y cómo pago? <div class="faq-icon">▾</div></button><div class="faq-a">La declaración de renta para personas naturales cuesta $79.000. Puedes pagar por Nequi, Daviplata, PSE o transferencia bancaria. Recibes comprobante de pago inmediato y la declaración lista en 24 a 48 horas hábiles.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>No esperes al último momento</h2>
+  <p>El plazo de la DIAN tiene fecha límite. Agenda tu declaración hoy y evita sanciones y colas de último minuto.</p>
+  <button class="btn-cta-big" onclick="openClientForm()">Declarar mi renta — $79.000 →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Yo<em>Contador</em></div>
+    <div class="footer-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#preguntas">FAQ</a>
+      <a href="https://wa.me/573001234567" target="_blank">WhatsApp</a>
+      <a href="#" onclick="openAdmin(event)">Acceso Contador</a>
+    </div>
+    <div class="footer-copy">© 2026 YoContador.com · Todos los derechos reservados · Declaración de renta 2025</div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/573001234567?text=Hola,%20quiero%20información%20sobre%20la%20declaración%20de%20renta%202025" target="_blank" title="Chatea por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- CLIENT FORM MODAL -->
+<div class="modal-overlay" id="clientModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeClientForm()">✕</button>
+    <div class="modal-eyebrow">Declaración de renta 2025</div>
+    <h2 class="modal-title">Completa tus datos</h2>
+    <p class="modal-sub">Con esta información nuestra contadora puede verificar tu situación en la DIAN y preparar tu declaración. Todo es confidencial.</p>
+    <div id="client-form-fields">
+      <div class="form-grid">
+        <div class="full field-row"><label class="field-label">Nombre completo *</label><input class="field-input" type="text" id="cf-nombre" placeholder="Como aparece en tu cédula"/></div>
+        <div class="field-row"><label class="field-label">Cédula *</label><input class="field-input" type="text" id="cf-cedula" placeholder="Sin puntos ni guiones" oninput="this.value=this.value.replace(/\D/g,'')"/></div>
+        <div class="field-row"><label class="field-label">WhatsApp *</label><input class="field-input" type="tel" id="cf-wpp" placeholder="3001234567"/></div>
+        <div class="full field-row"><label class="field-label">Correo electrónico *</label><input class="field-input" type="email" id="cf-email" placeholder="donde recibirás la declaración"/></div>
+        <div class="field-row"><label class="field-label">Ciudad</label><input class="field-input" type="text" id="cf-ciudad" placeholder="Bogotá, Medellín..."/></div>
+        <div class="field-row"><label class="field-label">Tipo de ingresos</label>
+          <select class="field-select" id="cf-tipo">
+            <option value="">Selecciona...</option>
+            <option value="Asalariado">Asalariado (trabajo en empresa)</option>
+            <option value="Independiente">Independiente / Honorarios</option>
+            <option value="Mixto">Asalariado + independiente</option>
+            <option value="Pensionado">Pensionado</option>
+            <option value="Arrendador">Arrendador</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="field-row"><label class="field-label">¿Tienes certificado de ingresos y retenciones?</label>
+          <select class="field-select" id="cf-cert">
+            <option value="">Selecciona...</option>
+            <option value="Sí, lo tengo">Sí, lo tengo</option>
+            <option value="No lo tengo">No, el empleador no me lo dio</option>
+            <option value="Solo parcial">Solo de algunos empleadores</option>
+            <option value="No aplica">Soy independiente, no aplica</option>
+          </select>
+        </div>
+        <div class="full field-row"><label class="field-label">¿Cuántos empleadores tuviste en 2025?</label>
+          <select class="field-select" id="cf-emp">
+            <option value="1">1 empleador</option>
+            <option value="2">2 empleadores</option>
+            <option value="3+">3 o más</option>
+            <option value="Ninguno">Ninguno (independiente)</option>
+          </select>
+        </div>
+        <div class="full field-row"><label class="field-label">Observaciones o información adicional</label><textarea class="field-input" id="cf-notas" rows="2" placeholder="Ej: ingresos del exterior, vendo por internet, negocios propios..."></textarea></div>
+        <div class="full"><label class="checkbox-row"><input type="checkbox" id="cf-auth"/><span class="checkbox-label">Autorizo a YoContador a consultar mi información básica ante la DIAN con fines exclusivos de preparar mi declaración de renta, conforme a la Ley 1581 de 2012.</span></label></div>
+      </div>
+      <div class="price-summary">
+        <div><div class="price-label">Declaración de Renta 2025</div><div class="price-sub">Incluye presentación ante la DIAN + envío digital</div></div>
+        <div class="price-amount">$79.000 COP</div>
+      </div>
+      <button class="btn-submit" id="btn-submit-form" onclick="submitClientForm()">Solicitar mi declaración →</button>
+      <div class="form-disclaimer">Después de este formulario te contactamos por WhatsApp para coordinar el pago. Tu información está protegida.</div>
+    </div>
+    <div id="form-success" style="display:none;text-align:center;padding:2rem 0">
+      <div style="font-size:3.5rem;margin-bottom:1rem">🎉</div>
+      <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.03em">¡Solicitud recibida!</h3>
+      <p style="font-size:.88rem;color:var(--ink2);line-height:1.75;max-width:360px;margin:0 auto 1.75rem">En los próximos minutos te contactamos por WhatsApp para coordinar el pago y comenzar tu declaración.</p>
+      <a href="https://wa.me/573001234567?text=Hola,%20acabo%20de%20solicitar%20mi%20declaraci%C3%B3n%20de%20renta%202025" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;padding:14px 28px;border-radius:50px;background:#25D366;color:#fff;font-weight:700;font-size:.9rem;box-shadow:0 4px 18px rgba(37,211,102,.4)">💬 Escríbenos ahora por WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN OVERLAY -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+    <div class="admin-head">
+      <div class="admin-title-row">
+        <div class="admin-title">Panel Administrativo</div>
+        <span class="admin-badge">CRM · YoContador</span>
+      </div>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="admin-body" id="admin-login">
+      <div class="login-wrap">
+        <div style="font-size:2.5rem;margin-bottom:.75rem">🔐</div>
+        <div class="login-title">Acceso Contadora</div>
+        <p class="login-sub">Ingresa con tus credenciales para gestionar las declaraciones de tus clientes</p>
+        <div class="field-row"><label class="field-label">Usuario</label><input class="field-input" type="text" id="admin-user" placeholder="contadora@yocontador.com"/></div>
+        <div class="field-row"><label class="field-label">Contraseña</label><input class="field-input" type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <div class="login-err" id="login-err">Usuario o contraseña incorrectos. Inténtalo de nuevo.</div>
+        <button class="btn-primary" style="width:100%;margin-top:1.25rem" onclick="doLogin()">Ingresar →</button>
+        <div style="margin-top:1.25rem;font-size:.75rem;color:var(--ink3)">Credenciales: usuario cualquiera · contraseña <strong>contador2025</strong></div>
+      </div>
+    </div>
+
+    <!-- CRM PANEL -->
+    <div class="admin-body" id="admin-crm" style="display:none">
+      <div class="crm-stats">
+        <div class="crm-stat"><div class="crm-stat-n" id="st-total" style="color:var(--ink)">0</div><div class="crm-stat-l">Total solicitudes</div></div>
+        <div class="crm-stat"><div class="crm-stat-n" id="st-paid" style="color:var(--green)">0</div><div class="crm-stat-l">Con pago confirmado</div></div>
+        <div class="crm-stat"><div class="crm-stat-n" id="st-proc" style="color:#b45309">0</div><div class="crm-stat-l">En proceso</div></div>
+        <div class="crm-stat"><div class="crm-stat-n" id="st-done" style="color:#4338ca">0</div><div class="crm-stat-l">Enviadas al cliente</div></div>
+      </div>
+      <div class="crm-toolbar">
+        <input class="field-input crm-search" type="search" id="crm-search" placeholder="Buscar por nombre, cédula o correo..." oninput="filterCRM()"/>
+        <select class="field-select" id="crm-filter" style="max-width:190px" onchange="filterCRM()">
+          <option value="">Todos los estados</option>
+          <option value="Nueva solicitud">Nueva solicitud</option>
+          <option value="Pago recibido">Pago recibido</option>
+          <option value="En proceso">En proceso</option>
+          <option value="Declaración enviada">Declaración enviada</option>
+        </select>
+        <button class="act-btn" onclick="exportCSV()" style="padding:9px 16px">⬇ Exportar CSV</button>
+        <button class="act-btn" onclick="showNewClient()" style="padding:9px 16px;border-color:rgba(10,191,191,.4);color:var(--teal3)">+ Nueva solicitud</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Nombre</th><th>Cédula</th><th>WhatsApp</th><th>Tipo</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="crm-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-head">
+      <div class="detail-title" id="detail-name-head">Cliente</div>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-body">
+
+      <!-- Info del cliente -->
+      <div class="detail-block">
+        <div class="detail-block-title">📋 Información del cliente</div>
+        <div class="info-grid" id="detail-info-grid"></div>
+      </div>
+
+      <!-- Estado -->
+      <div class="detail-block">
+        <div class="detail-block-title">🔄 Estado de la declaración</div>
+        <div class="status-row" id="detail-status-row"></div>
+      </div>
+
+      <!-- Notas internas -->
+      <div class="detail-block">
+        <div class="detail-block-title">📝 Notas internas</div>
+        <textarea class="notas-input" id="detail-notas" placeholder="Observaciones internas sobre este cliente..."></textarea>
+        <button class="btn-save" onclick="saveNotas()">Guardar nota</button>
+        <div class="saved-ok" id="saved-ok">✓ Guardado</div>
+      </div>
+
+      <!-- Mensaje WhatsApp -->
+      <div class="detail-block">
+        <div class="detail-block-title">💬 Mensaje WhatsApp — Confirmación de solicitud</div>
+        <textarea class="msg-textarea" id="msg-wa-confirm" rows="5"></textarea>
+        <div class="msg-actions">
+          <button class="btn-small" id="copy-wa-confirm" onclick="copyMsg('msg-wa-confirm','copy-wa-confirm')">📋 Copiar</button>
+          <button class="btn-wa" onclick="sendWA('wa-confirm')">💬 Abrir WhatsApp</button>
+        </div>
+      </div>
+
+      <!-- Mensaje WhatsApp Declaración Lista -->
+      <div class="detail-block">
+        <div class="detail-block-title">✅ Mensaje WhatsApp — Declaración lista</div>
+        <textarea class="msg-textarea" id="msg-wa-done" rows="6"></textarea>
+        <div class="msg-actions">
+          <button class="btn-small" id="copy-wa-done" onclick="copyMsg('msg-wa-done','copy-wa-done')">📋 Copiar</button>
+          <button class="btn-wa" onclick="sendWA('wa-done')">💬 Abrir WhatsApp</button>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="detail-block">
+        <div class="detail-block-title">✉️ Mensaje de correo — Declaración lista</div>
+        <textarea class="msg-textarea" id="msg-email" rows="8"></textarea>
+        <div class="msg-actions">
+          <button class="btn-small" id="copy-email" onclick="copyMsg('msg-email','copy-email')">📋 Copiar</button>
+          <button class="btn-email" onclick="sendEmail()">✉️ Abrir correo</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Theme ────────────────────────────────────────────────
+const root = document.documentElement;
+let dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+function toggleTheme(){
+  dark=!dark;
+  root.setAttribute('data-theme',dark?'dark':'light');
+  document.querySelector('.theme-btn').textContent=dark?'☀️':'🌙';
+}
+
+// ─── Number format ────────────────────────────────────────
+function formatNum(el){const v=el.value.replace(/\D/g,'');el.value=v?Number(v).toLocaleString('es-CO'):'';}
+function parseNum(s){return parseInt((s||'0').replace(/\D/g,''))||0;}
+
+// ─── Calculator ───────────────────────────────────────────
+let answers={},curStep=1;
+function goStep(n){
+  document.getElementById('step'+curStep).classList.remove('visible');
+  document.getElementById('step'+n).classList.add('visible');
+  curStep=n;
+  for(let i=1;i<=4;i++) document.getElementById('p'+i).className='prog-dot'+(i<n?' done':i===n?' active':'');
+  document.getElementById('calculadora').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function selectYN(key,val,btn){
+  answers[key]=val;
+  btn.parentElement.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const m={patrimonio:2,tarjeta:3,consig:4};
+  if(m[key]) document.getElementById('btn'+m[key]).disabled=false;
+}
+function selectRange(btn,val){
+  document.getElementById('inp-ingresos').value=Number(val).toLocaleString('es-CO');
+  answers.ingresos=parseInt(val);
+  document.getElementById('btn1').disabled=false;
+  document.querySelectorAll('#range-btns .yn-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+document.getElementById('inp-ingresos').addEventListener('input',function(){
+  const has=this.value.replace(/\D/g,'').length>0;
+  document.getElementById('btn1').disabled=!has;
+  answers.ingresos=parseNum(this.value);
+  document.querySelectorAll('#range-btns .yn-btn').forEach(b=>b.classList.remove('selected'));
+});
+function calcResult(){
+  const UVT=49799,TOPE=1400*UVT;
+  const must=answers.ingresos>=TOPE||answers.patrimonio==='si'||answers.tarjeta==='si'||answers.consig==='si';
+  for(let i=1;i<=4;i++){document.getElementById('step'+i).classList.remove('visible');document.getElementById('p'+i).className='prog-dot done';}
+  document.getElementById(must?'result-yes':'result-no').classList.add('show');
+}
+function resetCalc(){
+  answers={};curStep=1;
+  document.querySelectorAll('.calc-step').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('step1').classList.add('visible');
+  document.querySelectorAll('.prog-dot').forEach((p,i)=>p.className='prog-dot'+(i===0?' active':''));
+  ['result-yes','result-no'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  document.getElementById('inp-ingresos').value='';
+  document.querySelectorAll('.yn-btn').forEach(b=>b.classList.remove('selected'));
+  ['btn1','btn2','btn3','btn4'].forEach(id=>document.getElementById(id).disabled=true);
+}
+
+// ─── Client form ──────────────────────────────────────────
+function openClientForm(){document.getElementById('clientModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeClientForm(){document.getElementById('clientModal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('clientModal').addEventListener('click',function(e){if(e.target===this)closeClientForm();});
+function submitClientForm(){
+  const n=document.getElementById('cf-nombre').value.trim();
+  const c=document.getElementById('cf-cedula').value.trim();
+  const w=document.getElementById('cf-wpp').value.trim();
+  const e=document.getElementById('cf-email').value.trim();
+  const a=document.getElementById('cf-auth').checked;
+  if(!n){alert('Por favor ingresa tu nombre completo');return;}
+  if(!c||c.length<6){alert('Por favor ingresa tu cédula');return;}
+  if(!w||w.length<10){alert('Por favor ingresa tu WhatsApp');return;}
+  if(!e||!e.includes('@')){alert('Por favor ingresa un correo válido');return;}
+  if(!a){alert('Debes autorizar la consulta de tus datos para continuar');return;}
+  const btn=document.getElementById('btn-submit-form');
+  btn.disabled=true;btn.textContent='Enviando...';
+  crmData.unshift({
+    nombre:n,cedula:c,wpp:w,email:e,ciudad:document.getElementById('cf-ciudad').value||'No indicada',
+    tipo:document.getElementById('cf-tipo').value||'No especificado',
+    cert:document.getElementById('cf-cert').value||'—',
+    empleadores:document.getElementById('cf-emp').value||'1',
+    notas:document.getElementById('cf-notas').value,
+    estado:'Nueva solicitud',
+    fecha:new Date().toLocaleDateString('es-CO'),
+    notasInternas:''
+  });
+  updateStats();
+  setTimeout(()=>{
+    document.getElementById('client-form-fields').style.display='none';
+    document.getElementById('form-success').style.display='block';
+  },900);
+}
+
+// ─── FAQ ──────────────────────────────────────────────────
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item'),isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// ─── Admin ────────────────────────────────────────────────
+function openAdmin(e){e.preventDefault();document.getElementById('adminOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeAdmin(){document.getElementById('adminOverlay').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
+function doLogin(){
+  const pass=document.getElementById('admin-pass').value;
+  const err=document.getElementById('login-err');
+  if(pass==='contador2025'||pass==='contador2024'){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-crm').style.display='block';
+    renderCRM(crmData);updateStats();
+  } else {
+    err.style.display='block';
+    document.getElementById('admin-pass').value='';
+    setTimeout(()=>err.style.display='none',3500);
+  }
+}
+
+// ─── CRM DATA ─────────────────────────────────────────────
+const crmData=[
+  {nombre:'Diana Marcela Torres',cedula:'1020345678',wpp:'3101112233',email:'diana.torres@gmail.com',ciudad:'Bogotá',tipo:'Asalariada',cert:'Sí, lo tengo',empleadores:'1',notas:'',estado:'Declaración enviada',fecha:'15/07/2026',notasInternas:'Declaración presentada correctamente. Tuvo saldo a favor.'},
+  {nombre:'Carlos Andrés López',cedula:'79234567',wpp:'3002223344',email:'calopez@hotmail.com',ciudad:'Medellín',tipo:'Independiente',cert:'No aplica',empleadores:'Ninguno',notas:'Honorarios múltiples',estado:'En proceso',fecha:'14/07/2026',notasInternas:'Pendiente certificado honorarios de Empresa ABC.'},
+  {nombre:'María Fernanda Gómez',cedula:'52345678',wpp:'3153334455',email:'mafe.gomez@gmail.com',ciudad:'Cali',tipo:'Asalariada',cert:'Sí, lo tengo',empleadores:'1',notas:'',estado:'Pago recibido',fecha:'13/07/2026',notasInternas:''},
+  {nombre:'Andrés Felipe Ruiz',cedula:'1015456789',wpp:'3044445566',email:'aruiz@empresa.com',ciudad:'Barranquilla',tipo:'Mixto',cert:'Solo parcial',empleadores:'2',notas:'Tiene arriendo también',estado:'En proceso',fecha:'12/07/2026',notasInternas:'Revisando ingresos por arrendamiento.'},
+  {nombre:'Lina Marcela Castro',cedula:'43567890',wpp:'3205556677',email:'lcastro@gmail.com',ciudad:'Bogotá',tipo:'Pensionada',cert:'Sí, lo tengo',empleadores:'1',notas:'',estado:'Declaración enviada',fecha:'10/07/2026',notasInternas:''},
+  {nombre:'Hernán Darío Pérez',cedula:'71678901',wpp:'3116667788',email:'hdperez@yahoo.com',ciudad:'Manizales',tipo:'Independiente',cert:'No aplica',empleadores:'Ninguno',notas:'',estado:'Nueva solicitud',fecha:'10/07/2026',notasInternas:''},
+  {nombre:'Claudia Patricia Mora',cedula:'51789012',wpp:'3007778899',email:'cpmorag@gmail.com',ciudad:'Bogotá',tipo:'Asalariada',cert:'Sí, lo tengo',empleadores:'1',notas:'',estado:'Pago recibido',fecha:'09/07/2026',notasInternas:''},
+  {nombre:'Juan Pablo Vargas',cedula:'1098890123',wpp:'3138889900',email:'jpvargas@gmail.com',ciudad:'Pereira',tipo:'Independiente',cert:'No aplica',empleadores:'Ninguno',notas:'Vende por internet',estado:'Declaración enviada',fecha:'08/07/2026',notasInternas:''},
+];
+
+const STATUSES=['Nueva solicitud','Pago recibido','En proceso','Declaración enviada'];
+function chipCls(s){return{['Nueva solicitud']:'chip-new',['Pago recibido']:'chip-paid',['En proceso']:'chip-proc',['Declaración enviada']:'chip-done'}[s]||'chip-new';}
+
+function renderCRM(data){
+  document.getElementById('crm-tbody').innerHTML=data.map((r,i)=>`
+    <tr>
+      <td style="color:var(--ink3);font-variant-numeric:tabular-nums">${String(i+1).padStart(2,'0')}</td>
+      <td><strong>${r.nombre}</strong></td>
+      <td style="font-family:monospace;font-size:.79rem;color:var(--ink2)">${r.cedula}</td>
+      <td>${r.wpp}</td>
+      <td style="color:var(--ink2)">${r.tipo}</td>
+      <td><span class="chip ${chipCls(r.estado)}">${r.estado}</span></td>
+      <td style="color:var(--ink3);font-size:.77rem">${r.fecha}</td>
+      <td>
+        <div class="act-btns">
+          <button class="act-btn view" onclick="openDetail(${crmData.indexOf(r)})">Ver detalle</button>
+          <button class="act-btn wa" onclick="quickWA('${r.wpp}','${r.nombre}')">💬 WA</button>
+          <button class="act-btn" onclick="cycleStatus(${crmData.indexOf(r)})">Estado ▾</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function cycleStatus(idx){
+  crmData[idx].estado=STATUSES[(STATUSES.indexOf(crmData[idx].estado)+1)%STATUSES.length];
+  renderCRM(crmData);updateStats();
+}
+function quickWA(num,nombre){
+  const msg=encodeURIComponent(`Hola ${nombre.split(' ')[0]}, soy la contadora de YoContador 😊 Te escribo en relación con tu declaración de renta 2025. ¿Cómo estás?`);
+  window.open(`https://wa.me/57${num}?text=${msg}`,'_blank');
+}
+function filterCRM(){
+  const q=document.getElementById('crm-search').value.toLowerCase();
+  const f=document.getElementById('crm-filter').value;
+  renderCRM(crmData.filter(r=>(!q||r.nombre.toLowerCase().includes(q)||r.cedula.includes(q)||r.email.toLowerCase().includes(q))&&(!f||r.estado===f)));
+}
+function updateStats(){
+  document.getElementById('st-total').textContent=crmData.length;
+  document.getElementById('st-paid').textContent=crmData.filter(r=>['Pago recibido','En proceso','Declaración enviada'].includes(r.estado)).length;
+  document.getElementById('st-proc').textContent=crmData.filter(r=>r.estado==='En proceso').length;
+  document.getElementById('st-done').textContent=crmData.filter(r=>r.estado==='Declaración enviada').length;
+}
+function exportCSV(){
+  const rows=[['Nombre','Cédula','WhatsApp','Email','Ciudad','Tipo','Certificado','Empleadores','Estado','Fecha']];
+  crmData.forEach(r=>rows.push([r.nombre,r.cedula,r.wpp,r.email,r.ciudad,r.tipo,r.cert,r.empleadores,r.estado,r.fecha]));
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));
+  a.download='clientes-yocontador-2025.csv';a.click();
+}
+function showNewClient(){
+  closeAdmin();
+  openClientForm();
+}
+
+// ─── Detail panel ─────────────────────────────────────────
+let currentDetailIdx=null;
+function openDetail(idx){
+  currentDetailIdx=idx;
+  const r=crmData[idx];
+  document.getElementById('detail-name-head').textContent=r.nombre;
+
+  // Info grid
+  document.getElementById('detail-info-grid').innerHTML=`
+    <div class="info-cell"><div class="info-label">Nombre completo</div><div class="info-val">${r.nombre}</div></div>
+    <div class="info-cell"><div class="info-label">Cédula</div><div class="info-val">${r.cedula}</div></div>
+    <div class="info-cell"><div class="info-label">WhatsApp</div><div class="info-val">${r.wpp}</div></div>
+    <div class="info-cell"><div class="info-label">Correo</div><div class="info-val" style="word-break:break-all">${r.email}</div></div>
+    <div class="info-cell"><div class="info-label">Ciudad</div><div class="info-val">${r.ciudad}</div></div>
+    <div class="info-cell"><div class="info-label">Tipo de ingresos</div><div class="info-val">${r.tipo}</div></div>
+    <div class="info-cell"><div class="info-label">Certificado retenciones</div><div class="info-val">${r.cert}</div></div>
+    <div class="info-cell"><div class="info-label">N.° empleadores 2025</div><div class="info-val">${r.empleadores}</div></div>
+    ${r.notas?`<div class="info-cell full" style="grid-column:1/-1"><div class="info-label">Notas del cliente</div><div class="info-val">${r.notas}</div></div>`:''}
+  `;
+
+  // Status selector
+  document.getElementById('detail-status-row').innerHTML=STATUSES.map(s=>`
+    <div class="status-opt ${r.estado===s?'active':''}" onclick="setStatus(${idx},'${s}',this)">${s}</div>
+  `).join('');
+
+  // Notas internas
+  document.getElementById('detail-notas').value=r.notasInternas||'';
+  document.getElementById('saved-ok').style.display='none';
+
+  // Mensajes pre-rellenados
+  const nombre1=r.nombre.split(' ')[0];
+  document.getElementById('msg-wa-confirm').value=
+`Hola ${nombre1} 👋, soy Martha, tu contadora de YoContador.
+
+Recibí tu solicitud de declaración de renta 2025. Para continuar necesito que me confirmes el pago de $79.000 a:
+
+📲 Nequi: 300 123 4567
+🏦 Daviplata: 300 123 4567
+🏧 Transferencia: Bancolombia · Ahorros · 1234567890 · Martha Rodríguez
+
+Una vez confirmes el pago comenzamos de inmediato. Tendrás tu declaración lista en 24–48 horas hábiles. ¡Gracias por confiar en nosotros! 🙏`;
+
+  document.getElementById('msg-wa-done').value=
+`Hola ${nombre1} 👋, ¡buenas noticias!
+
+✅ Tu declaración de renta 2025 ya está lista y fue presentada exitosamente ante la DIAN.
+
+📄 Te acabo de enviar el formulario firmado a tu correo: ${r.email}
+
+Guarda ese documento — es la constancia oficial de que declaraste. Si recibes alguna citación o requerimiento de la DIAN, comunícate conmigo de inmediato.
+
+¡Muchas gracias! 🎉 Fue un placer trabajar contigo.
+— Martha · YoContador`;
+
+  document.getElementById('msg-email').value=
+`Asunto: Tu declaración de renta 2025 — YoContador
+
+Hola ${r.nombre},
+
+Es un placer informarte que tu declaración de renta del año gravable 2025 fue presentada exitosamente ante la DIAN.
+
+INFORMACIÓN DE TU DECLARACIÓN:
+• Contribuyente: ${r.nombre}
+• Cédula: ${r.cedula}
+• Período gravable: Año 2025
+• Fecha de presentación: ${new Date().toLocaleDateString('es-CO')}
+• Estado: Presentada ante la DIAN ✅
+
+Adjunto encontrarás el formulario 210 firmado como constancia de tu declaración.
+
+IMPORTANTE: Guarda este documento. Si recibes alguna comunicación de la DIAN, comunícate conmigo de inmediato.
+
+Para cualquier consulta puedes escribirme por WhatsApp al 300 123 4567 o responder este correo.
+
+Atentamente,
+Martha Rodríguez Ávila
+Contadora Pública — Tarjeta Profesional Vigente
+YoContador · www.yocontador.com`;
+
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeDetail(){
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('detailOverlay').addEventListener('click',function(e){if(e.target===this)closeDetail();});
+
+function setStatus(idx,status,el){
+  crmData[idx].estado=status;
+  document.querySelectorAll('#detail-status-row .status-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  renderCRM(crmData);updateStats();
+}
+function saveNotas(){
+  if(currentDetailIdx===null)return;
+  crmData[currentDetailIdx].notasInternas=document.getElementById('detail-notas').value;
+  const ok=document.getElementById('saved-ok');
+  ok.style.display='block';
+  setTimeout(()=>ok.style.display='none',2500);
+}
+function copyMsg(textareaId,btnId){
+  const txt=document.getElementById(textareaId).value;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById(btnId);
+    const orig=btn.textContent;
+    btn.textContent='✓ Copiado';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2000);
+  }).catch(()=>{
+    const ta=document.getElementById(textareaId);ta.select();document.execCommand('copy');
+  });
+}
+function sendWA(type){
+  if(currentDetailIdx===null)return;
+  const r=crmData[currentDetailIdx];
+  const msg=type==='wa-confirm'
+    ?document.getElementById('msg-wa-confirm').value
+    :document.getElementById('msg-wa-done').value;
+  window.open(`https://wa.me/57${r.wpp}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function sendEmail(){
+  if(currentDetailIdx===null)return;
+  const r=crmData[currentDetailIdx];
+  const body=document.getElementById('msg-email').value;
+  const subject=encodeURIComponent('Tu declaración de renta 2025 — YoContador');
+  window.open(`mailto:${r.email}?subject=${subject}&body=${encodeURIComponent(body)}`,'_blank');
+}
+
+// ─── Nav scroll ───────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.boxShadow=window.scrollY>40?'var(--shadow)':'';
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeClientForm();closeAdmin();closeDetail();}
+});
+</script>
+</body>
+</html>
