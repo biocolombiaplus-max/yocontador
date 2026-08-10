@@ -1,34 +1,58 @@
 import Link from "next/link";
-import { Building2, Users, Image as ImageIcon, CalendarClock, ArrowUpRight } from "lucide-react";
+import {
+  Building2,
+  Users,
+  Image as ImageIcon,
+  CalendarClock,
+  ArrowUpRight,
+  Wallet,
+} from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { PageHeader, Card, Badge } from "@/components/ui";
 import { StatTile } from "@/components/stat-tile";
 import FollowersTrendChart, { type TrendPoint } from "@/components/charts/followers-trend-chart";
 import { companyInitials } from "@/lib/initials";
+import { formatCOP } from "@/lib/money";
+import { PROFIT_PARTNERS } from "@/lib/constants";
 
 export default async function DashboardHome() {
-  const [companies, connectedAccounts, scheduledPosts, publishedThisMonth, snapshots] =
-    await Promise.all([
-      prisma.company.findMany({
-        where: { isActive: true },
-        orderBy: { order: "asc" },
-        include: {
-          socialAccounts: true,
-          _count: { select: { contentPosts: true } },
-        },
-      }),
-      prisma.socialAccount.count({ where: { status: "CONECTADA" } }),
-      prisma.contentPost.count({ where: { status: "PROGRAMADO" } }),
-      prisma.contentPost.count({
-        where: {
-          status: "PUBLICADO",
-          publishedAt: { gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1) },
-        },
-      }),
-      prisma.statSnapshot.findMany({
-        orderBy: { date: "asc" },
-      }),
-    ]);
+  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+  const [
+    companies,
+    connectedAccounts,
+    scheduledPosts,
+    publishedThisMonth,
+    snapshots,
+    incomeMonthAgg,
+    expenseMonthAgg,
+  ] = await Promise.all([
+    prisma.company.findMany({
+      where: { isActive: true },
+      orderBy: { order: "asc" },
+      include: {
+        socialAccounts: true,
+        _count: { select: { contentPosts: true } },
+      },
+    }),
+    prisma.socialAccount.count({ where: { status: "CONECTADA" } }),
+    prisma.contentPost.count({ where: { status: "PROGRAMADO" } }),
+    prisma.contentPost.count({
+      where: {
+        status: "PUBLICADO",
+        publishedAt: { gte: monthStart },
+      },
+    }),
+    prisma.statSnapshot.findMany({
+      orderBy: { date: "asc" },
+    }),
+    prisma.income.aggregate({ where: { date: { gte: monthStart } }, _sum: { amount: true } }),
+    prisma.expense.aggregate({ where: { date: { gte: monthStart } }, _sum: { amount: true } }),
+  ]);
+
+  const incomeMonth = incomeMonthAgg._sum.amount ?? 0;
+  const expenseMonth = expenseMonthAgg._sum.amount ?? 0;
+  const profitMonth = incomeMonth - expenseMonth;
 
   const byDate = new Map<string, { facebook: number; instagram: number }>();
   for (const s of snapshots) {
@@ -66,6 +90,47 @@ export default async function DashboardHome() {
         <StatTile label="Programados" value={scheduledPosts} icon={CalendarClock} />
         <StatTile label="Publicados este mes" value={publishedThisMonth} icon={ImageIcon} />
       </div>
+
+      <Card className="mb-6 border-brand/20 bg-brand/5 p-4">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Wallet size={16} className="text-brand" />
+            <h2 className="text-sm font-semibold text-slate-900">Finanzas del mes</h2>
+          </div>
+          <Link href="/finanzas" className="flex items-center gap-1 text-xs font-medium text-brand">
+            Ver finanzas completas
+            <ArrowUpRight size={13} />
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+          <div>
+            <p className="text-xs text-slate-500">Facturado</p>
+            <p className="text-lg font-semibold tabular-nums text-emerald-700">
+              {formatCOP(incomeMonth)}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-slate-500">Gastado</p>
+            <p className="text-lg font-semibold tabular-nums text-red-600">
+              {formatCOP(expenseMonth)}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-slate-500">Utilidad</p>
+            <p className="text-lg font-semibold tabular-nums text-slate-900">
+              {formatCOP(profitMonth)}
+            </p>
+          </div>
+          {PROFIT_PARTNERS.map((partner) => (
+            <div key={partner.name}>
+              <p className="truncate text-xs text-slate-500">{partner.name.split(" ")[0]} (50%)</p>
+              <p className="text-lg font-semibold tabular-nums" style={{ color: partner.color }}>
+                {formatCOP(Math.round(profitMonth * partner.share))}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
 
       <div className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="p-4 lg:col-span-2">

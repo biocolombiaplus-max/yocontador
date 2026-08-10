@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Settings, ChevronRight } from "lucide-react";
+import {
+  LayoutDashboard,
+  Building2,
+  Settings,
+  ChevronRight,
+  Wallet,
+  Users,
+  LayoutGrid,
+} from "lucide-react";
 import clsx from "clsx";
 
 type Company = { id: string; name: string; slug: string; colorHex: string };
@@ -12,6 +20,9 @@ export default function Sidebar({ companies }: { companies: Company[] }) {
 
   const isDashboard = pathname === "/";
   const isEmpresasRoot = pathname === "/empresas";
+  const isFinanzas = pathname === "/finanzas";
+  const isClientes = pathname.startsWith("/clientes");
+  const isServicios = pathname === "/servicios";
   const isAjustes = pathname === "/ajustes";
 
   return (
@@ -47,6 +58,41 @@ export default function Sidebar({ companies }: { companies: Company[] }) {
         >
           <Building2 size={17} />
           Todas las empresas
+        </Link>
+
+        <Link
+          href="/finanzas"
+          className={clsx(
+            "mb-3 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition",
+            isFinanzas ? "bg-brand/15 text-brand" : "text-slate-300 hover:bg-slate-900 hover:text-white"
+          )}
+        >
+          <Wallet size={17} />
+          Finanzas
+        </Link>
+
+        <p className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">
+          Agencia
+        </p>
+        <Link
+          href="/clientes"
+          className={clsx(
+            "mb-1 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition",
+            isClientes ? "bg-brand/15 text-brand" : "text-slate-300 hover:bg-slate-900 hover:text-white"
+          )}
+        >
+          <Users size={17} />
+          Clientes
+        </Link>
+        <Link
+          href="/servicios"
+          className={clsx(
+            "mb-3 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition",
+            isServicios ? "bg-brand/15 text-brand" : "text-slate-300 hover:bg-slate-900 hover:text-white"
+          )}
+        >
+          <LayoutGrid size={17} />
+          Servicios
         </Link>
 
         <p className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">

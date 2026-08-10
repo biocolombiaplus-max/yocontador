@@ -1,3 +1,4 @@
+/** Genera 2 iniciales representativas a partir de un nombre (empresa, servicio, etc.). */
 export function companyInitials(name: string): string {
   const words = name.trim().split(/\s+/);
 

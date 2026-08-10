@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -43,6 +43,47 @@ enum ContentStatus {
   FALLIDO
 }
 
+enum ExpenseCategory {
+  NOMINA
+  ARRIENDO
+  SERVICIOS
+  MARKETING
+  INSUMOS
+  TECNOLOGIA
+  IMPUESTOS
+  OTRO
+}
+
+enum BillingPeriod {
+  MENSUAL
+  ANUAL
+}
+
+enum SubscriptionStatus {
+  AL_DIA
+  PENDIENTE
+  SUSPENDIDO
+  CANCELADO
+}
+
+enum PaymentMethod {
+  MANUAL
+  WOMPI
+  OTRO
+}
+
+enum ReminderType {
+  RECORDATORIO
+  VENCIMIENTO
+  SUSPENSION
+  CONFIRMACION_PAGO
+}
+
+enum ReminderChannel {
+  EMAIL
+  WHATSAPP
+}
+
 model User {
   id                 String   @id @default(cuid())
   cedula             String   @unique
@@ -56,6 +97,9 @@ model User {
 
   contentPosts ContentPost[]
   activityLogs ActivityLog[]
+  incomes      Income[]
+  expenses     Expense[]
+  payments     Payment[]
 }
 
 model Company {
@@ -76,23 +120,55 @@ model Company {
   contentPosts   ContentPost[]
   statSnapshots  StatSnapshot[]
   activityLogs   ActivityLog[]
+  incomes        Income[]
+  expenses       Expense[]
+}
+
+model Income {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  date        DateTime
+  amount      Int
+  description String
+  client      String?
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([companyId, date])
+}
+
+model Expense {
+  id          String          @id @default(cuid())
+  companyId   String
+  company     Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  date        DateTime
+  amount      Int
+  category    ExpenseCategory
+  description String
+  createdById String?
+  createdBy   User?           @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime        @default(now())
+
+  @@index([companyId, date])
 }
 
 model SocialAccount {
-  id            String               @id @default(cuid())
-  companyId     String
-  company       Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  platform      SocialPlatform
-  handle        String
-  displayName   String?
-  status        SocialAccountStatus  @default(PENDIENTE)
-  followers     Int                  @default(0)
-  profileUrl    String?
-  accessToken   String?
-  notes         String?
-  connectedAt   DateTime?
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
+  id          String              @id @default(cuid())
+  companyId   String
+  company     Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  platform    SocialPlatform
+  handle      String
+  displayName String?
+  status      SocialAccountStatus @default(PENDIENTE)
+  followers   Int                 @default(0)
+  profileUrl  String?
+  accessToken String?
+  notes       String?
+  connectedAt DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
 
   contentPosts ContentPostTarget[]
 
@@ -100,30 +176,30 @@ model SocialAccount {
 }
 
 model ContentPost {
-  id           String            @id @default(cuid())
-  companyId    String
-  company      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  title        String
-  caption      String
-  mediaType    ContentMediaType
-  mediaUrl     String?
-  status       ContentStatus     @default(BORRADOR)
-  scheduledAt  DateTime?
-  publishedAt  DateTime?
-  createdById  String?
-  createdBy    User?             @relation(fields: [createdById], references: [id])
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  id          String           @id @default(cuid())
+  companyId   String
+  company     Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  title       String
+  caption     String
+  mediaType   ContentMediaType
+  mediaUrl    String?
+  status      ContentStatus    @default(BORRADOR)
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  createdById String?
+  createdBy   User?            @relation(fields: [createdById], references: [id])
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   targets ContentPostTarget[]
 }
 
 model ContentPostTarget {
-  id              String         @id @default(cuid())
+  id              String        @id @default(cuid())
   contentPostId   String
-  contentPost     ContentPost    @relation(fields: [contentPostId], references: [id], onDelete: Cascade)
+  contentPost     ContentPost   @relation(fields: [contentPostId], references: [id], onDelete: Cascade)
   socialAccountId String
-  socialAccount   SocialAccount  @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
 
   @@unique([contentPostId, socialAccountId])
 }
@@ -152,4 +228,93 @@ model ActivityLog {
   action    String
   detail    String?
   createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// CRM de clientes: catalogo de servicios que se venden, clientes, sus
+// suscripciones a esos servicios, pagos y el historial de recordatorios
+// enviados por correo/WhatsApp.
+// ---------------------------------------------------------------------------
+
+model ServiceOffering {
+  id                 String        @id @default(cuid())
+  name               String
+  slug               String        @unique
+  shortDescription   String
+  description        String
+  logoUrl            String?
+  heroImageUrl       String?
+  colorHex           String        @default("#7C3AED")
+  defaultPriceCOP    Int
+  defaultPeriod      BillingPeriod @default(MENSUAL)
+  reconnectionFeeCOP Int           @default(50000)
+  isActive           Boolean       @default(true)
+  isPublished        Boolean       @default(true)
+  order              Int           @default(0)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  subscriptions ClientSubscription[]
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  phone       String
+  companyName String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subscriptions ClientSubscription[]
+}
+
+model ClientSubscription {
+  id                 String             @id @default(cuid())
+  clientId           String
+  client             Client             @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  serviceId          String
+  service            ServiceOffering    @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  priceCOP           Int
+  period             BillingPeriod      @default(MENSUAL)
+  status             SubscriptionStatus @default(AL_DIA)
+  initialChargeDate  DateTime
+  renewalDate        DateTime
+  reconnectionFeeCOP Int                @default(50000)
+  notes              String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  payments  Payment[]
+  reminders ReminderLog[]
+
+  @@index([status, renewalDate])
+}
+
+model Payment {
+  id             String             @id @default(cuid())
+  subscriptionId String
+  subscription   ClientSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  amount         Int
+  method         PaymentMethod      @default(MANUAL)
+  reference      String?
+  paidAt         DateTime           @default(now())
+  registeredById String?
+  registeredBy   User?              @relation(fields: [registeredById], references: [id], onDelete: SetNull)
+  createdAt      DateTime           @default(now())
+}
+
+model ReminderLog {
+  id             String             @id @default(cuid())
+  subscriptionId String
+  subscription   ClientSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  type           ReminderType
+  channel        ReminderChannel
+  daysOffset     Int
+  dateKey        String
+  sentAt         DateTime           @default(now())
+
+  @@unique([subscriptionId, type, channel, dateKey])
 }

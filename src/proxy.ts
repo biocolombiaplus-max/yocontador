@@ -9,9 +9,14 @@ export async function proxy(request: NextRequest) {
   if (
     pathname.startsWith("/login") ||
     pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/api/cron") ||
+    pathname.startsWith("/landing") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/uploads") ||
-    pathname === "/favicon.ico"
+    pathname.startsWith("/icons") ||
+    pathname.startsWith("/logos") ||
+    pathname === "/favicon.ico" ||
+    pathname === "/manifest.webmanifest"
   ) {
     return NextResponse.next();
   }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, LayoutDashboard, Building2, Settings } from "lucide-react";
+import { Menu, X, LayoutDashboard, Building2, Settings, Wallet, Users, LayoutGrid } from "lucide-react";
 import clsx from "clsx";
 
 type Company = { id: string; name: string; slug: string; colorHex: string };
@@ -54,6 +54,42 @@ export default function MobileNav({ companies }: { companies: Company[] }) {
               >
                 <Building2 size={17} />
                 Todas las empresas
+              </Link>
+              <Link
+                href="/finanzas"
+                onClick={() => setOpen(false)}
+                className={clsx(
+                  "mb-3 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium",
+                  pathname === "/finanzas" ? "bg-brand/15 text-brand" : "text-slate-300"
+                )}
+              >
+                <Wallet size={17} />
+                Finanzas
+              </Link>
+              <p className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                Agencia
+              </p>
+              <Link
+                href="/clientes"
+                onClick={() => setOpen(false)}
+                className={clsx(
+                  "mb-1 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium",
+                  pathname.startsWith("/clientes") ? "bg-brand/15 text-brand" : "text-slate-300"
+                )}
+              >
+                <Users size={17} />
+                Clientes
+              </Link>
+              <Link
+                href="/servicios"
+                onClick={() => setOpen(false)}
+                className={clsx(
+                  "mb-3 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium",
+                  pathname === "/servicios" ? "bg-brand/15 text-brand" : "text-slate-300"
+                )}
+              >
+                <LayoutGrid size={17} />
+                Servicios
               </Link>
               <p className="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-slate-600">
                 Empresas

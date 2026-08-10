@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -41,10 +42,6 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
-
-# local sqlite database
-/prisma/dev.db
-/prisma/dev.db-journal
 
 # user-uploaded media (use object storage in production)
 /public/uploads/

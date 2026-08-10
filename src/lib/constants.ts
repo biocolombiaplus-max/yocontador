@@ -31,3 +31,37 @@ export const ROLE_META = {
   PROPIETARIO: { label: "Propietario" },
   ADMINISTRADORA: { label: "Administradora" },
 } as const;
+
+export const EXPENSE_CATEGORY_META = {
+  NOMINA: { label: "Nomina" },
+  ARRIENDO: { label: "Arriendo" },
+  SERVICIOS: { label: "Servicios" },
+  MARKETING: { label: "Marketing" },
+  INSUMOS: { label: "Insumos" },
+  TECNOLOGIA: { label: "Tecnologia" },
+  IMPUESTOS: { label: "Impuestos" },
+  OTRO: { label: "Otro" },
+} as const;
+
+export const PROFIT_PARTNERS = [
+  { name: "Juan Carlos Caceres", share: 0.5, color: "#0EA5A4" },
+  { name: "Nicol Bustos", share: 0.5, color: "#DB2777" },
+] as const;
+
+export const SUBSCRIPTION_STATUS_META = {
+  AL_DIA: { label: "Al dia", tone: "success" },
+  PENDIENTE: { label: "Pendiente", tone: "warning" },
+  SUSPENDIDO: { label: "Suspendido", tone: "danger" },
+  CANCELADO: { label: "Cancelado", tone: "neutral" },
+} as const;
+
+export const PAYMENT_METHOD_META = {
+  MANUAL: { label: "Manual" },
+  WOMPI: { label: "Wompi" },
+  OTRO: { label: "Otro" },
+} as const;
+
+export const BILLING_PERIOD_META = {
+  MENSUAL: { label: "Mensual" },
+  ANUAL: { label: "Anual" },
+} as const;

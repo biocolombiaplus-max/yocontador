@@ -13,6 +13,7 @@ export default function CompanyTabs({ slug }: { slug: string }) {
     { href: `${base}/redes`, label: "Redes sociales" },
     { href: `${base}/contenido`, label: "Contenido" },
     { href: `${base}/estadisticas`, label: "Estadisticas" },
+    { href: `${base}/finanzas`, label: "Finanzas" },
   ];
 
   return (

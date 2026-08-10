@@ -1,0 +1,25 @@
+# Configuracion de Firebase App Hosting.
+# Ver: https://firebase.google.com/docs/app-hosting/configure
+
+runConfig:
+  minInstances: 0
+  maxInstances: 1
+  concurrency: 40
+  cpu: 1
+  memoryMiB: 512
+
+# DATABASE_URL y AUTH_SECRET se configuran como secretos (Secret Manager),
+# no como valores en texto plano aqui. Puedes crearlos con:
+#   firebase apphosting:secrets:set DATABASE_URL
+#   firebase apphosting:secrets:set AUTH_SECRET
+# o desde el panel de Firebase Console al crear el backend de App Hosting.
+env:
+  - variable: DATABASE_URL
+    secret: DATABASE_URL
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: AUTH_SECRET
+    secret: AUTH_SECRET
+    availability:
+      - RUNTIME
