@@ -1,4 +1,4 @@
-import { Check, ArrowUpRight } from "lucide-react";
+import { Check, ArrowUpRight, Sparkles, ShieldCheck } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatCOP } from "@/lib/money";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
@@ -21,14 +21,63 @@ export const dynamic = "force-dynamic";
 const SUPPORT_WHATSAPP = process.env.SUPPORT_WHATSAPP ?? "573505457420";
 const GENERAL_MSG = "Hola BIO COLOMBIA, quiero informacion sobre sus productos y servicios.";
 
+const PRICING_SLUGS = ["redes-emprendedor", "redes-basico", "redes-intermedio", "redes-empresarial"];
+
+const AI_SERVICES = [
+  {
+    title: "Automatizacion de procesos con IA",
+    text: "Optimizamos procesos manuales y repetitivos de tu empresa (atencion al cliente, ventas, facturacion, reportes) con soluciones de Inteligencia Artificial a la medida, sin importar el sector.",
+    bullets: [
+      "Chatbots y asistentes con IA",
+      "Automatizacion de flujos internos y reportes",
+      "Integracion con tus sistemas actuales",
+    ],
+    ctaText: "Hablar de automatizacion",
+    waMsg: "Hola, quiero informacion sobre automatizacion de procesos con IA para mi empresa.",
+  },
+  {
+    title: "Cursos y talleres de Inteligencia Artificial",
+    text: "Capacitamos a tu equipo para usar la Inteligencia Artificial en el dia a dia: desde herramientas basicas hasta automatizacion avanzada, con talleres practicos adaptados a tu empresa.",
+    bullets: [
+      "Talleres presenciales o virtuales",
+      "Contenido adaptado a tu sector",
+      "Casos practicos con herramientas reales de IA",
+    ],
+    ctaText: "Hablar de cursos de IA",
+    waMsg: "Hola, quiero informacion sobre cursos y talleres de Inteligencia Artificial para mi empresa.",
+  },
+];
+
+const VALUES = [
+  {
+    title: "Decisiones con datos, no con suposiciones",
+    text: "Cada estrategia se apoya en analitica de datos e Inteligencia Artificial real, no en una etiqueta de moda.",
+  },
+  {
+    title: "Desarrollo a la medida",
+    text: "Cada producto se personaliza con el logo, colores y necesidades reales de tu negocio.",
+  },
+  {
+    title: "Soporte humano real",
+    text: "Detras de cada producto hay un equipo que responde por WhatsApp, no un bot sin salida.",
+  },
+  {
+    title: "Hecho en Colombia",
+    text: "Para negocios colombianos: precios en pesos, soporte en espanol y por WhatsApp.",
+  },
+];
+
 export default async function LandingPage() {
-  const [companies, services] = await Promise.all([
+  const [companies, allServices] = await Promise.all([
     prisma.company.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
     prisma.serviceOffering.findMany({
       where: { isActive: true, isPublished: true },
       orderBy: { order: "asc" },
     }),
   ]);
+
+  const pricingPlans = allServices.filter((s) => PRICING_SLUGS.includes(s.slug));
+  const services = allServices.filter((s) => !PRICING_SLUGS.includes(s.slug));
 
   const heroWhatsApp = buildWhatsAppLink(SUPPORT_WHATSAPP, GENERAL_MSG);
   const loopedCompanies = companies.length > 0 ? [...companies, ...companies] : [];
@@ -63,6 +112,7 @@ export default async function LandingPage() {
         </a>
         <div className="nav-links" id="bioNavLinks">
           <a href="#empresas">Empresas</a>
+          <a href="#planes">Planes</a>
           <a href="#servicios">Servicios</a>
           <a href="#contacto">Contacto</a>
           <a href={heroWhatsApp} className="nav-cta" target="_blank" rel="noopener noreferrer">
@@ -106,12 +156,12 @@ export default async function LandingPage() {
               <span>Empresas del grupo</span>
             </div>
             <div className="stat">
-              <b className="counter" data-target={services.length}>0</b>
-              <span>Servicios digitales</span>
+              <b className="counter" data-target={pricingPlans.length}>0</b>
+              <span>Planes de redes sociales</span>
             </div>
             <div className="stat">
-              <b className="counter" data-target={4} data-prefix="+">0</b>
-              <span>Redes sociales integradas</span>
+              <b className="counter" data-target={services.length}>0</b>
+              <span>Servicios digitales</span>
             </div>
             <div className="stat">
               <b className="counter" data-target={100} data-suffix="%">0</b>
@@ -213,7 +263,7 @@ export default async function LandingPage() {
                       {c.website && (
                         <a href={c.website} className="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">
                           <ArrowUpRight size={15} />
-                          Sitio web
+                          Ver demo
                         </a>
                       )}
                     </div>
@@ -225,8 +275,71 @@ export default async function LandingPage() {
         </section>
       )}
 
+      {/* PLANES DE REDES SOCIALES */}
+      {pricingPlans.length > 0 && (
+        <section id="planes" style={{ background: "var(--bg2)" }}>
+          <div className="wrap">
+            <div className="section-head reveal">
+              <span className="kicker">Estrategia - Datos - Inteligencia Artificial</span>
+              <h2>
+                Redes sociales que convierten <span className="grad-text">seguidores en clientes</span>
+              </h2>
+              <p>
+                Nada de publicar por publicar. Trabajamos con la misma metodologia de las agencias
+                lideres: analisis de nicho, optimizacion de perfil y estrategia de contenido apoyada
+                en Inteligencia Artificial y analitica de datos, para cualquier negocio o marca
+                personal que quiera crecer con resultados medibles, no solo likes.
+              </p>
+            </div>
+            <div className="pricing-grid">
+              {pricingPlans.map((s) => {
+                const bullets = s.description.split("\n").filter(Boolean);
+                const isCustom = s.defaultPriceCOP === 0;
+                const waLink = buildWhatsAppLink(
+                  SUPPORT_WHATSAPP,
+                  `Hola, quiero adquirir el plan "${s.name}" de gestion de redes sociales.`
+                );
+                return (
+                  <div className={`plan reveal${s.isFeatured ? " featured" : ""}`} key={s.id}>
+                    {s.isFeatured && <span className="plan-badge">Mas elegido</span>}
+                    <h3>{s.name.replace("Redes sociales - ", "")}</h3>
+                    <p className="plan-sub">{s.shortDescription}</p>
+                    {isCustom ? (
+                      <div className="price">A la medida</div>
+                    ) : (
+                      <div className="price">
+                        {formatCOP(s.defaultPriceCOP)} <small>COP/mes</small>
+                      </div>
+                    )}
+                    <div className="price-note">
+                      {isCustom ? "Cotizacion segun marcas y alcance" : "Sin permanencia minima"}
+                    </div>
+                    <ul>
+                      {bullets.map((b) => (
+                        <li key={b}>
+                          <Check size={17} />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={waLink}
+                      className={`btn ${s.isFeatured ? "btn-whatsapp" : "btn-ghost"}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Me interesa adquirir
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* SERVICIOS */}
-      <section id="servicios" style={{ background: "var(--bg2)" }}>
+      <section id="servicios">
         <div className="wrap">
           <div className="section-head reveal">
             <span className="kicker">Servicios digitales</span>
@@ -274,11 +387,13 @@ export default async function LandingPage() {
                       {formatCOP(s.defaultPriceCOP)}{" "}
                       <small>/ {BILLING_PERIOD_META[s.defaultPeriod].label.toLowerCase()}</small>
                     </div>
-                    <ul style={{ marginBottom: 24 }}>
-                      <li style={{ display: "flex", gap: 9, fontSize: ".84rem", color: "var(--ink2)" }}>
-                        <Check size={16} style={{ flexShrink: 0, marginTop: 2, color: s.colorHex }} />
-                        {s.description}
-                      </li>
+                    <ul>
+                      {s.description.split("\n").filter(Boolean).map((line) => (
+                        <li key={line}>
+                          <Check size={16} style={{ color: s.colorHex }} />
+                          {line}
+                        </li>
+                      ))}
                     </ul>
                     <a href={waLink} className="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
                       <WhatsAppIcon size={16} />
@@ -289,6 +404,71 @@ export default async function LandingPage() {
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* MAS SERVICIOS (IA a la medida) */}
+      <section id="mas-servicios" style={{ background: "var(--bg2)" }}>
+        <div className="wrap">
+          <div className="section-head reveal">
+            <span className="kicker">Mas servicios</span>
+            <h2>
+              Inteligencia Artificial aplicada a <span className="grad-text">cualquier empresa</span>
+            </h2>
+            <p>
+              No solo desarrollamos productos propios: tambien ayudamos a otras empresas a
+              incorporar IA en sus procesos y a que sus equipos aprendan a usarla.
+            </p>
+          </div>
+          <div className="services-grid" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+            {AI_SERVICES.map((svc) => {
+              const waLink = buildWhatsAppLink(SUPPORT_WHATSAPP, svc.waMsg);
+              return (
+                <div className="scard reveal" key={svc.title}>
+                  <div className="scard-icon">
+                    <Sparkles />
+                  </div>
+                  <h3>{svc.title}</h3>
+                  <p>{svc.text}</p>
+                  <ul>
+                    {svc.bullets.map((b) => (
+                      <li key={b}>
+                        <Check size={17} />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <a href={waLink} className="btn btn-whatsapp btn-sm" target="_blank" rel="noopener noreferrer">
+                    <WhatsAppIcon size={16} />
+                    {svc.ctaText}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* VALORES */}
+      <section>
+        <div className="wrap">
+          <div className="section-head reveal">
+            <span className="kicker">Por que BIO COLOMBIA</span>
+            <h2>
+              IA real, hecha por personas que <span className="grad-text">responden</span>
+            </h2>
+          </div>
+          <div className="values-grid">
+            {VALUES.map((v) => (
+              <div className="value reveal" key={v.title}>
+                <div className="value-icon">
+                  <ShieldCheck />
+                </div>
+                <h4>{v.title}</h4>
+                <p>{v.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -352,6 +532,12 @@ export default async function LandingPage() {
                   {c.name}
                 </a>
               ))}
+            </div>
+            <div className="footer-col">
+              <h5>Servicios</h5>
+              <a href="#planes">Redes sociales</a>
+              <a href="#servicios">Servicios digitales</a>
+              <a href="#mas-servicios">Automatizacion con IA</a>
             </div>
             <div className="footer-col">
               <h5>Contacto</h5>

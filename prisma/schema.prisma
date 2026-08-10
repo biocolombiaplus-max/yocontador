@@ -248,6 +248,7 @@ model ServiceOffering {
   defaultPriceCOP    Int
   defaultPeriod      BillingPeriod @default(MENSUAL)
   reconnectionFeeCOP Int           @default(50000)
+  isFeatured         Boolean       @default(false)
   isActive           Boolean       @default(true)
   isPublished        Boolean       @default(true)
   order              Int           @default(0)

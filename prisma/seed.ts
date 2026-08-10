@@ -30,6 +30,7 @@ const COMPANIES = [
       "Software especializado para la gestion integral de laboratorios clinicos: ordenes, resultados, facturacion e interoperabilidad.",
     colorHex: "#0EA5A4",
     logoUrl: "/logos/biosoft.png",
+    website: "https://bioauditoria.com/biosoft/landing.html",
   },
   {
     slug: "biofutbol",
@@ -58,6 +59,26 @@ const COMPANIES = [
     colorHex: "#2563EB",
     logoUrl: "/logos/biosalud.png",
   },
+  {
+    slug: "biocontador",
+    name: "Bio Contador",
+    sector: "Software y app - Declaracion de renta",
+    description:
+      "Software y app web para elaborar declaraciones de renta con Inteligencia Artificial, con el respaldo real de una contadora certificada detras de cada proceso, para personas naturales y para contadores que quieran digitalizar su propia gestion con clientes.",
+    colorHex: "#F59E0B",
+    logoUrl: "/logos/biocontador.png",
+    website: "https://biocolombiaplus-max.github.io/yocontador",
+  },
+  {
+    slug: "biofinanzas",
+    name: "Bio Finanzas",
+    sector: "Plataforma - Recuperacion de cartera",
+    description:
+      "Plataforma tecnologica para que entidades financieras y empresas con cartera pendiente gestionen con Inteligencia Artificial la recuperacion de cartera y el proceso comercial de sus asesores, con ranking en vivo y campanas de remarketing.",
+    colorHex: "#0891B2",
+    logoUrl: "/logos/biofinanzas.jpg",
+    website: "https://biocolombiaplus-max.github.io/biofinanzas/",
+  },
 ];
 
 const PLATFORMS: SocialPlatform[] = ["FACEBOOK", "INSTAGRAM", "WHATSAPP", "TIKTOK"];
@@ -84,14 +105,72 @@ const SERVICES = [
     defaultPeriod: "MENSUAL" as const,
   },
   {
-    slug: "gestion-redes-sociales",
-    name: "Gestion de redes sociales",
-    shortDescription: "Contenido, calendario y estadisticas para tus redes.",
-    description:
-      "Manejamos el contenido, la programacion y el analisis de resultados de tus redes sociales (Facebook, Instagram, TikTok y WhatsApp), con reportes mensuales de crecimiento.",
-    colorHex: "#DB2777",
-    defaultPriceCOP: 600000,
+    slug: "redes-emprendedor",
+    name: "Redes sociales - Emprendedor",
+    shortDescription:
+      "Para emprendedores y negocios que estan arrancando en redes y quieren una base solida sin gastar de mas.",
+    description: [
+      "Analisis de nicho y optimizacion de perfil (Instagram y Facebook)",
+      "2 reels mensuales",
+      "8 imagenes de producto o servicio con apoyo de IA",
+    ].join("\n"),
+    colorHex: "#7C3AED",
+    defaultPriceCOP: 350000,
     defaultPeriod: "MENSUAL" as const,
+    isFeatured: false,
+  },
+  {
+    slug: "redes-basico",
+    name: "Redes sociales - Basico",
+    shortDescription:
+      "Para negocios que quieren dejar de publicar sin rumbo y empezar a tener una estrategia real.",
+    description: [
+      "Analisis de nicho y optimizacion de perfil",
+      "1 red social (Instagram o Facebook)",
+      "8 piezas de diseno al mes",
+      "Calendario de contenido con estrategia mensual",
+      "Reporte mensual de resultados",
+    ].join("\n"),
+    colorHex: "#7C3AED",
+    defaultPriceCOP: 690000,
+    defaultPeriod: "MENSUAL" as const,
+    isFeatured: false,
+  },
+  {
+    slug: "redes-intermedio",
+    name: "Redes sociales - Intermedio",
+    shortDescription:
+      "Para marcas que quieren crecer de forma constante y convertir seguidores en clientes reales.",
+    description: [
+      "Analisis de nicho y optimizacion de perfil a fondo",
+      "2 redes sociales (Instagram + Facebook)",
+      "16 piezas de diseno + 4 reels al mes",
+      "Estrategia de contenido con IA y analitica de datos",
+      "Community management de comentarios y mensajes",
+      "Pauta publicitaria gestionada (inversion aparte)",
+      "Reporte mensual con metricas de crecimiento",
+    ].join("\n"),
+    colorHex: "#F97316",
+    defaultPriceCOP: 1290000,
+    defaultPeriod: "MENSUAL" as const,
+    isFeatured: true,
+  },
+  {
+    slug: "redes-empresarial",
+    name: "Redes sociales - Empresarial",
+    shortDescription:
+      "Para empresas y grupos con varias sedes, marcas o lineas de negocio que necesitan una estrategia a la medida.",
+    description: [
+      "Redes ilimitadas (Instagram, Facebook, TikTok, WhatsApp Business)",
+      "Produccion fotografica y de video profesional",
+      "Estrategia y pauta avanzada con IA y analitica de datos",
+      "Gestor de cuenta dedicado",
+      "Reportes personalizados por marca o sede",
+    ].join("\n"),
+    colorHex: "#DB2777",
+    defaultPriceCOP: 0,
+    defaultPeriod: "MENSUAL" as const,
+    isFeatured: false,
   },
   {
     slug: "diseno-desarrollo-web",
@@ -122,7 +201,7 @@ const DEMO_CLIENTS = [
     email: "carlos.ramirez@example.com",
     phone: "3022345678",
     companyName: "Odontologia Sonrisas",
-    serviceSlug: "gestion-redes-sociales",
+    serviceSlug: "redes-basico",
     monthsAgo: 4,
     status: "PENDIENTE" as const,
   },
@@ -172,7 +251,7 @@ async function main() {
     const c = COMPANIES[i];
     const company = await prisma.company.upsert({
       where: { slug: c.slug },
-      update: { logoUrl: c.logoUrl },
+      update: { logoUrl: c.logoUrl, website: c.website ?? null },
       create: { ...c, order: i },
     });
 
@@ -296,6 +375,7 @@ async function main() {
         colorHex: s.colorHex,
         defaultPriceCOP: s.defaultPriceCOP,
         defaultPeriod: s.defaultPeriod,
+        isFeatured: "isFeatured" in s ? s.isFeatured : false,
         order: i,
       },
     });
@@ -361,7 +441,7 @@ async function main() {
   }
 
   console.log(
-    "Seed completado: 2 usuarios, 4 empresas, cuentas sociales, estadisticas, catalogo de servicios y clientes demo."
+    `Seed completado: 2 usuarios, ${COMPANIES.length} empresas, cuentas sociales, estadisticas, catalogo de servicios y clientes demo.`
   );
 }
 
