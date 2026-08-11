@@ -268,6 +268,12 @@ export default async function LandingPage() {
                         <WhatsAppIcon size={16} />
                         Preguntar por {c.name}
                       </a>
+                      {c.slug === "biomarketing" && pricingPlans.length > 0 && (
+                        <a href="#planes" className="btn btn-ghost btn-sm">
+                          <ArrowUpRight size={15} />
+                          Ver planes
+                        </a>
+                      )}
                       {c.website && (
                         <a href={c.website} className="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">
                           <ArrowUpRight size={15} />
@@ -288,15 +294,16 @@ export default async function LandingPage() {
         <section id="planes" style={{ background: "var(--bg2)" }}>
           <div className="wrap">
             <div className="section-head reveal">
-              <span className="kicker">Estrategia - Datos - Inteligencia Artificial</span>
+              <span className="kicker">Biomarketing - Estrategia - Datos - Inteligencia Artificial</span>
               <h2>
                 Redes sociales que convierten <span className="grad-text">seguidores en clientes</span>
               </h2>
               <p>
-                Nada de publicar por publicar. Trabajamos con la misma metodologia de las agencias
-                lideres: analisis de nicho, optimizacion de perfil y estrategia de contenido apoyada
-                en Inteligencia Artificial y analitica de datos, para cualquier negocio o marca
-                personal que quiera crecer con resultados medibles, no solo likes.
+                Los planes de gestion de redes sociales de Biomarketing, nuestra agencia de marketing
+                digital: para cualquier tipo de empresa o emprendimiento, no solo salud. Trabajamos
+                con la misma metodologia de las agencias lideres (analisis de nicho, optimizacion de
+                perfil y estrategia de contenido apoyada en Inteligencia Artificial y analitica de
+                datos) con un solo objetivo: aumentar tus ventas de productos o servicios.
               </p>
             </div>
             <div className="pricing-grid">

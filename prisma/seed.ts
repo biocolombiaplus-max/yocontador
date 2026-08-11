@@ -44,9 +44,9 @@ const COMPANIES = [
   {
     slug: "biomarketing",
     name: "Biomarketing",
-    sector: "Marketing digital para salud",
+    sector: "Agencia de marketing digital y redes sociales",
     description:
-      "Agencia especialista en aumentar ventas y captacion de pacientes para negocios del sector salud.",
+      "Agencia de marketing digital para cualquier tipo de empresa o emprendimiento: gestionamos tus redes sociales y estrategia de contenido con el objetivo de aumentar tus ventas de productos o servicios, apoyados en Inteligencia Artificial.",
     colorHex: "#DB2777",
     logoUrl: "/logos/biomarketing.png",
   },
