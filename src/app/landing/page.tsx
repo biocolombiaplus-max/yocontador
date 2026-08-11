@@ -23,6 +23,12 @@ const GENERAL_MSG = "Hola BIO COLOMBIA, quiero informacion sobre sus productos y
 
 const PRICING_SLUGS = ["redes-emprendedor", "redes-basico", "redes-intermedio", "redes-empresarial"];
 
+const META_ADS_SETUP_FEES: Record<string, number> = {
+  "redes-emprendedor": 50000,
+  "redes-basico": 70000,
+  "redes-intermedio": 100000,
+};
+
 const AI_SERVICES = [
   {
     title: "Automatizacion de procesos con IA",
@@ -295,14 +301,16 @@ export default async function LandingPage() {
               {pricingPlans.map((s) => {
                 const bullets = s.description.split("\n").filter(Boolean);
                 const isCustom = s.defaultPriceCOP === 0;
+                const planLabel = s.name.replace("Redes sociales - ", "");
                 const waLink = buildWhatsAppLink(
                   SUPPORT_WHATSAPP,
                   `Hola, quiero adquirir el plan "${s.name}" de gestion de redes sociales.`
                 );
+                const metaFee = META_ADS_SETUP_FEES[s.slug];
                 return (
                   <div className={`plan reveal${s.isFeatured ? " featured" : ""}`} key={s.id}>
                     {s.isFeatured && <span className="plan-badge">Mas elegido</span>}
-                    <h3>{s.name.replace("Redes sociales - ", "")}</h3>
+                    <h3>{planLabel}</h3>
                     <p className="plan-sub">{s.shortDescription}</p>
                     {isCustom ? (
                       <div className="price">A la medida</div>
@@ -322,14 +330,67 @@ export default async function LandingPage() {
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href={waLink}
-                      className={`btn ${s.isFeatured ? "btn-whatsapp" : "btn-ghost"}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Me interesa adquirir
-                    </a>
+
+                    {metaFee ? (
+                      <>
+                        <div className="plan-divider">Elige como quieres empezar</div>
+                        <div className="plan-options">
+                          <div className="plan-option recommended">
+                            <span className="plan-option-badge">Recomendado</span>
+                            <h4>Con campana paga en Meta Ads</h4>
+                            <p>
+                              Anuncios reales en Instagram y Facebook para atraer clientes
+                              potenciales desde el dia 1.
+                            </p>
+                            <div className="plan-option-price">
+                              +{formatCOP(metaFee)} <small>montaje unico</small>
+                            </div>
+                            <div className="plan-option-note">
+                              Inversion publicitaria desde $5.000 COP/dia (se paga directo a Meta)
+                            </div>
+                            <a
+                              href={buildWhatsAppLink(
+                                SUPPORT_WHATSAPP,
+                                `Hola, quiero el plan ${planLabel} CON campana paga en Meta Ads.`
+                              )}
+                              className="btn btn-grad"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Me interesa con campana paga
+                            </a>
+                          </div>
+                          <div className="plan-option">
+                            <h4>Sin campana paga (organico)</h4>
+                            <p>Empieza a crecer con contenido y estrategia organica.</p>
+                            <div className="plan-option-price">Incluido</div>
+                            <div className="plan-option-note">
+                              Puedes activar la pauta mas adelante cuando quieras
+                            </div>
+                            <a
+                              href={buildWhatsAppLink(
+                                SUPPORT_WHATSAPP,
+                                `Hola, quiero el plan ${planLabel} SIN campana paga por ahora.`
+                              )}
+                              className="btn btn-ghost"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Me interesa sin campana paga
+                            </a>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <a
+                        href={waLink}
+                        className={`btn ${s.isFeatured ? "btn-whatsapp" : "btn-ghost"}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Me interesa adquirir
+                      </a>
+                    )}
                   </div>
                 );
               })}
@@ -420,7 +481,7 @@ export default async function LandingPage() {
               incorporar IA en sus procesos y a que sus equipos aprendan a usarla.
             </p>
           </div>
-          <div className="services-grid" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+          <div className="services-grid-2col">
             {AI_SERVICES.map((svc) => {
               const waLink = buildWhatsAppLink(SUPPORT_WHATSAPP, svc.waMsg);
               return (
