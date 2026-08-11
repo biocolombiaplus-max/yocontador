@@ -1,4 +1,4 @@
-export const GROUP_NAME = "BIO COLOMBIA";
+export const GROUP_NAME = "Bio Marketing";
 
 export const PLATFORM_META = {
   FACEBOOK: { label: "Facebook", color: "#1877F2" },

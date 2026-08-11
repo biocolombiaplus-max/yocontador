@@ -27,7 +27,7 @@ export default function MobileNav({ companies }: { companies: Company[] }) {
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
           <div className="relative flex h-full w-72 flex-col bg-slate-950 shadow-xl">
             <div className="flex items-center justify-between border-b border-slate-800 px-4 py-4">
-              <span className="text-sm font-semibold text-white">BIO COLOMBIA</span>
+              <span className="text-sm font-semibold text-white">Bio Marketing</span>
               <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-white">
                 <X size={20} />
               </button>

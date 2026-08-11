@@ -2,13 +2,13 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "BIO COLOMBIA | Panel administrativo",
-    short_name: "BIO COLOMBIA",
-    description: "Panel administrativo del grupo empresarial BIO COLOMBIA.",
+    name: "Bio Marketing | Panel administrativo",
+    short_name: "Bio Marketing",
+    description: "Panel administrativo del grupo empresarial Bio Marketing.",
     start_url: "/",
     display: "standalone",
     background_color: "#0f172a",
-    theme_color: "#0EA5A4",
+    theme_color: "#6D28D9",
     orientation: "portrait-primary",
     lang: "es-CO",
     icons: [

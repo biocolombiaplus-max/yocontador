@@ -1,6 +1,6 @@
-# BIO COLOMBIA — Panel administrativo de grupo
+# Bio Marketing — Panel administrativo de grupo
 
-Panel privado para administrar todas las empresas del grupo **BIO COLOMBIA**
+Panel privado para administrar todas las empresas del grupo **Bio Marketing**
 (Biosoft, BioFutbol, Biomarketing, Biosalud, y las que se agreguen despues)
 desde un solo lugar, al estilo de una agencia de marketing digital: una
 empresa por cliente, con sus redes sociales, su calendario de contenido y sus
@@ -34,7 +34,7 @@ del grupo.
   sobre la utilidad neta (ingresos menos gastos totales), tanto del mes
   como historico.
 - **Ajustes de cuenta**: cada usuario cambia su propia contrasena.
-- **Catalogo de servicios**: los servicios digitales que BIO COLOMBIA vende
+- **Catalogo de servicios**: los servicios digitales que Bio Marketing vende
   (Automatizacion WhatsApp + IA, Automatizacion de cobros, Gestion de redes,
   etc.), cada uno con su logo, imagen de portada, precio y descripcion,
   editables desde el panel. Se pueden publicar u ocultar de la landing
@@ -218,7 +218,7 @@ para que esto no se mezcle con nada mas.
 1. Crea una base Postgres gratis en [neon.tech](https://neon.tech) y copia
    su cadena de conexion (`postgresql://...`).
 2. En la [consola de Firebase](https://console.firebase.google.com), crea
-   un **proyecto nuevo** dedicado a BIO COLOMBIA.
+   un **proyecto nuevo** dedicado a Bio Marketing.
 3. Dentro del proyecto, ve a **App Hosting** → **Comenzar** (Get started) →
    conecta tu cuenta de GitHub → selecciona el repositorio
    `biocolombiaplus-max/bio-colombia`, rama `main`.

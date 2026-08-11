@@ -76,7 +76,7 @@ export default async function DashboardHome() {
     <div>
       <PageHeader
         title="Resumen general"
-        description="Vision consolidada de todas las empresas del grupo BIO COLOMBIA."
+        description="Vision consolidada de todas las empresas del grupo Bio Marketing."
       />
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

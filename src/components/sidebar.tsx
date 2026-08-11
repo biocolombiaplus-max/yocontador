@@ -28,11 +28,10 @@ export default function Sidebar({ companies }: { companies: Company[] }) {
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-800 bg-slate-950 lg:flex">
       <div className="flex items-center gap-2.5 border-b border-slate-800 px-5 py-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
-          BC
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/logo.png" alt="Bio Marketing" className="h-9 w-9 shrink-0 rounded-lg object-cover" />
         <div>
-          <p className="text-sm font-semibold text-white">BIO COLOMBIA</p>
+          <p className="text-sm font-semibold text-white">Bio Marketing</p>
           <p className="text-xs text-slate-500">Panel de grupo</p>
         </div>
       </div>
@@ -137,7 +136,7 @@ export default function Sidebar({ companies }: { companies: Company[] }) {
       </nav>
 
       <div className="border-t border-slate-800 px-4 py-3">
-        <p className="text-xs text-slate-600">Grupo empresarial BIO COLOMBIA</p>
+        <p className="text-xs text-slate-600">Grupo empresarial Bio Marketing</p>
       </div>
     </aside>
   );

@@ -3,6 +3,11 @@ import type { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+// Cualquier archivo estatico servido desde /public (logos, iconos, imagenes
+// de marca, etc.) debe quedar accesible sin sesion, sin importar en que
+// subcarpeta viva, para que no se rompa cada vez que se agrega una nueva.
+const STATIC_ASSET_RE = /\.(png|jpe?g|gif|svg|webp|ico|css|js|woff2?|ttf|json)$/i;
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -12,11 +17,8 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/api/cron") ||
     pathname.startsWith("/landing") ||
     pathname.startsWith("/_next") ||
-    pathname.startsWith("/uploads") ||
-    pathname.startsWith("/icons") ||
-    pathname.startsWith("/logos") ||
-    pathname === "/favicon.ico" ||
-    pathname === "/manifest.webmanifest"
+    pathname === "/manifest.webmanifest" ||
+    STATIC_ASSET_RE.test(pathname)
   ) {
     return NextResponse.next();
   }

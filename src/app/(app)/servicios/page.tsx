@@ -15,7 +15,7 @@ export default async function ServiciosPage() {
     <div>
       <PageHeader
         title="Catalogo de servicios"
-        description="Los servicios digitales que BIO COLOMBIA ofrece a sus clientes, con logo e imagenes para la landing publica."
+        description="Los servicios digitales que Bio Marketing ofrece a sus clientes, con logo e imagenes para la landing publica."
         action={
           <div className="flex items-center gap-2">
             <Link

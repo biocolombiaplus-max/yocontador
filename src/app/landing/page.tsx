@@ -8,10 +8,26 @@ import "./premium.css";
 import LandingInteractions from "./landing-interactions";
 import WhatsAppIcon from "./whatsapp-icon";
 
+const LANDING_TITLE = "Bio Marketing | Innovacion digital con Inteligencia Artificial";
+const LANDING_DESCRIPTION =
+  "Grupo tecnologico colombiano: software, automatizacion y marketing con IA para negocios en toda Colombia.";
+
 export const metadata = {
-  title: "BIO COLOMBIA | Innovacion digital con Inteligencia Artificial",
-  description:
-    "Grupo tecnologico colombiano: software, automatizacion y marketing con IA para negocios en toda Colombia.",
+  title: LANDING_TITLE,
+  description: LANDING_DESCRIPTION,
+  openGraph: {
+    title: LANDING_TITLE,
+    description: LANDING_DESCRIPTION,
+    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Bio Marketing" }],
+    type: "website",
+    locale: "es_CO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: LANDING_TITLE,
+    description: LANDING_DESCRIPTION,
+    images: ["/brand/og-image.png"],
+  },
 };
 
 // Los servicios y empresas se administran desde el panel, asi que esta
@@ -19,7 +35,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 const SUPPORT_WHATSAPP = process.env.SUPPORT_WHATSAPP ?? "573505457420";
-const GENERAL_MSG = "Hola BIO COLOMBIA, quiero informacion sobre sus productos y servicios.";
+const GENERAL_MSG = "Hola Bio Marketing, quiero informacion sobre sus productos y servicios.";
 
 const PRICING_SLUGS = ["redes-emprendedor", "redes-basico", "redes-intermedio", "redes-empresarial"];
 
@@ -96,24 +112,10 @@ export default async function LandingPage() {
       {/* NAV */}
       <nav id="bioNav">
         <a href="#top" className="brand">
-          <div className="brand-mark" style={{ background: "var(--grad-brand)" }}>
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#fff",
-                fontWeight: 800,
-                fontSize: "0.85rem",
-              }}
-            >
-              BC
-            </div>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/logo.png" alt="Bio Marketing" className="brand-mark" />
           <span className="brand-word">
-            BIO<b>COLOMBIA</b>
+            Bio<b>Marketing</b>
           </span>
         </a>
         <div className="nav-links" id="bioNavLinks">
@@ -422,7 +424,7 @@ export default async function LandingPage() {
               {services.map((s) => {
                 const waLink = buildWhatsAppLink(
                   SUPPORT_WHATSAPP,
-                  `Hola! Me interesa el servicio "${s.name}" que vi en la pagina de BIO COLOMBIA.`
+                  `Hola! Me interesa el servicio "${s.name}" que vi en la pagina de Bio Marketing.`
                 );
                 return (
                   <div
@@ -514,7 +516,7 @@ export default async function LandingPage() {
       <section>
         <div className="wrap">
           <div className="section-head reveal">
-            <span className="kicker">Por que BIO COLOMBIA</span>
+            <span className="kicker">Por que Bio Marketing</span>
             <h2>
               IA real, hecha por personas que <span className="grad-text">responden</span>
             </h2>
@@ -539,7 +541,7 @@ export default async function LandingPage() {
           <div className="final-cta reveal">
             <h2>Hablemos de tu proyecto</h2>
             <p>
-              Cuentanos que necesitas y te decimos, sin rodeos, que servicio de BIO COLOMBIA se
+              Cuentanos que necesitas y te decimos, sin rodeos, que servicio de Bio Marketing se
               ajusta mejor a tu negocio.
             </p>
             <div className="hero-cta">
@@ -564,24 +566,10 @@ export default async function LandingPage() {
           <div className="footer-top">
             <div className="footer-brand">
               <a href="#top" className="brand">
-                <div className="brand-mark" style={{ background: "var(--grad-brand)" }}>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#fff",
-                      fontWeight: 800,
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    BC
-                  </div>
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/brand/logo.png" alt="Bio Marketing" className="brand-mark" />
                 <span className="brand-word">
-                  BIO<b>COLOMBIA</b>
+                  Bio<b>Marketing</b>
                 </span>
               </a>
               <p>Innovacion digital: software, automatizacion y marketing con Inteligencia Artificial.</p>
@@ -605,11 +593,11 @@ export default async function LandingPage() {
               <a href={heroWhatsApp} target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
-              <a href={`mailto:${process.env.EMAIL_USER ?? "contacto@biocolombia.com"}`}>Correo</a>
+              <a href={`mailto:${process.env.EMAIL_USER ?? "contacto@biomarketing.com"}`}>Correo</a>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>&copy; {new Date().getFullYear()} BIO COLOMBIA. Todos los derechos reservados.</span>
+            <span>&copy; {new Date().getFullYear()} Bio Marketing. Todos los derechos reservados.</span>
             <span>Hecho en Colombia</span>
           </div>
         </div>

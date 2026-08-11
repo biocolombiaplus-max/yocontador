@@ -91,7 +91,7 @@ export default async function GroupFinancePage() {
     <div>
       <PageHeader
         title="Finanzas"
-        description="Facturacion y gastos consolidados de todas las empresas de BIO COLOMBIA."
+        description="Facturacion y gastos consolidados de todas las empresas de Bio Marketing."
       />
 
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

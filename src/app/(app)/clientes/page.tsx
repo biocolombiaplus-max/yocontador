@@ -43,7 +43,7 @@ export default async function ClientesPage({
     <div>
       <PageHeader
         title="Clientes"
-        description="Todas las empresas y personas que contratan servicios de BIO COLOMBIA."
+        description="Todas las empresas y personas que contratan servicios de Bio Marketing."
         action={<NewClientForm />}
       />
 

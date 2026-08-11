@@ -126,7 +126,7 @@ ${
   <p style="color:${BRAND.lilac};font-size:13px;font-weight:800;margin:0 0 4px;text-align:center;">${BRAND.name}</p>
   <p style="color:#7c3aed;font-size:11px;margin:0 0 8px;font-weight:600;text-align:center;">${BRAND.tagline}</p>
   <p style="color:#6d28d9;font-size:10px;margin:0;line-height:1.8;text-align:center;">
-    ${process.env.EMAIL_USER ?? "contacto@biocolombia.com"} &nbsp;|&nbsp; WhatsApp: ${process.env.SUPPORT_WHATSAPP ?? ""}<br>
+    ${process.env.EMAIL_USER ?? "contacto@biomarketing.com"} &nbsp;|&nbsp; WhatsApp: ${process.env.SUPPORT_WHATSAPP ?? ""}<br>
     Este es un correo automatico. Para soporte usa WhatsApp.
   </p>
 </td></tr>

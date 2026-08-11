@@ -17,10 +17,13 @@ export default async function LoginPage({
     <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-teal-950 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-xl font-bold text-white shadow-lg shadow-teal-900/40">
-            BC
-          </div>
-          <h1 className="text-2xl font-semibold text-white">BIO COLOMBIA</h1>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo.png"
+            alt="Bio Marketing"
+            className="mx-auto mb-4 h-14 w-14 rounded-2xl object-cover shadow-lg shadow-teal-900/40"
+          />
+          <h1 className="text-2xl font-semibold text-white">Bio Marketing</h1>
           <p className="mt-1 text-sm text-slate-400">Panel administrativo de grupo</p>
         </div>
 
@@ -29,7 +32,7 @@ export default async function LoginPage({
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-500">
-          Acceso restringido. Solo usuarios autorizados de BIO COLOMBIA.
+          Acceso restringido. Solo usuarios autorizados de Bio Marketing.
         </p>
       </div>
     </div>

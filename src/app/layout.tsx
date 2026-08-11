@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BIO COLOMBIA | Panel de Grupo",
-  description: "Panel administrativo del grupo empresarial BIO COLOMBIA",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://bio-colombia-one.vercel.app"),
+  title: "Bio Marketing | Panel de Grupo",
+  description: "Panel administrativo del grupo empresarial Bio Marketing",
   icons: {
     icon: [
       { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
@@ -25,12 +26,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "BIO COLOMBIA",
+    title: "Bio Marketing",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0EA5A4",
+  themeColor: "#6D28D9",
   width: "device-width",
   initialScale: 1,
 };

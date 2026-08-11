@@ -15,7 +15,7 @@ export default async function EmpresasPage() {
     <div>
       <PageHeader
         title="Todas las empresas"
-        description="Administra las empresas del grupo BIO COLOMBIA desde un solo lugar."
+        description="Administra las empresas del grupo Bio Marketing desde un solo lugar."
         action={<NewCompanyForm />}
       />
 
