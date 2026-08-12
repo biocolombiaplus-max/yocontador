@@ -1,10 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
+import { saveImage } from "@/lib/upload";
 
 export type ContentFormState = { error?: string; success?: boolean };
 
@@ -49,13 +48,12 @@ export async function createContentPost(
       return { error: "Formato de archivo no soportado." };
     }
 
-    const bytes = Buffer.from(await file.arrayBuffer());
-    const dir = path.join(process.cwd(), "public", "uploads", companySlug);
-    await mkdir(dir, { recursive: true });
-    const ext = path.extname(file.name) || (file.type.startsWith("video") ? ".mp4" : ".jpg");
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
-    await writeFile(path.join(dir, filename), bytes);
-    mediaUrl = `/uploads/${companySlug}/${filename}`;
+    mediaUrl = await saveImage(
+      file,
+      "contenido",
+      companySlug,
+      file.type.startsWith("video") ? ".mp4" : ".jpg"
+    );
   }
 
   const post = await prisma.contentPost.create({

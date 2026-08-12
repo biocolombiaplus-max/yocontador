@@ -94,6 +94,17 @@ export default function NewCompanyForm() {
               />
             </div>
           </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium text-slate-600">
+              Logo (opcional, lo puedes agregar despues)
+            </label>
+            <input
+              name="logo"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs outline-none file:mr-2 file:rounded-md file:border-0 file:bg-slate-100 file:px-2 file:py-1 file:text-xs"
+            />
+          </div>
 
           {state?.error && (
             <p className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{state.error}</p>

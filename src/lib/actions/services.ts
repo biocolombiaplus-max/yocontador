@@ -1,32 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
 import { slugify } from "@/lib/slug";
+import { saveImage as saveImageToStorage, validateImage } from "@/lib/upload";
 
 export type ServiceFormState = { error?: string; success?: boolean };
 
-const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8MB
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
-
-async function saveImage(file: File, folder: string): Promise<string> {
-  const bytes = Buffer.from(await file.arrayBuffer());
-  const dir = path.join(process.cwd(), "public", "uploads", "servicios", folder);
-  await mkdir(dir, { recursive: true });
-  const ext = path.extname(file.name) || ".jpg";
-  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
-  await writeFile(path.join(dir, filename), bytes);
-  return `/uploads/servicios/${folder}/${filename}`;
-}
-
-function validateImage(file: File | null): string | null {
-  if (!file || file.size === 0) return null;
-  if (file.size > MAX_IMAGE_BYTES) return "La imagen supera el limite de 8MB.";
-  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) return "Formato de imagen no soportado.";
-  return null;
+function saveImage(file: File, folder: string): Promise<string> {
+  return saveImageToStorage(file, "servicios", folder);
 }
 
 export async function createService(
