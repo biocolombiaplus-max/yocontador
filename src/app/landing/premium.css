@@ -142,7 +142,7 @@
 .bio-landing .pcard-tag{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-c,var(--purple-l))}
 .bio-landing .pcard h3{font-size:1.4rem;margin-top:2px}
 .bio-landing .pcard p.desc{color:var(--ink2);font-size:.95rem;margin-bottom:20px;flex:1}
-.bio-landing .pcard-actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px}
+.bio-landing .pcard-actions{margin-top:auto;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
 
 /* SERVICES (catalogo) */
 .bio-landing .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}

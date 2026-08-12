@@ -275,7 +275,7 @@ export default async function LandingPage() {
                         </a>
                       )}
                       {c.website && (
-                        <a href={c.website} className="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">
+                        <a href={c.website} className="btn btn-grad btn-sm" target="_blank" rel="noopener noreferrer">
                           <ArrowUpRight size={15} />
                           Ver demo
                         </a>

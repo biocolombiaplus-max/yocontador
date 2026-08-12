@@ -30,7 +30,7 @@ const COMPANIES = [
       "Software especializado para la gestion integral de laboratorios clinicos: ordenes, resultados, facturacion e interoperabilidad.",
     colorHex: "#0EA5A4",
     logoUrl: "/logos/biosoft.png",
-    website: "https://bioauditoria.com/biosoft/landing.html",
+    website: "https://bioauditoria.com/biosoft/app.html",
   },
   {
     slug: "biofutbol",
