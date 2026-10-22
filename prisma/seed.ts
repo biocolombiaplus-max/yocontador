@@ -217,6 +217,89 @@ const DEMO_CLIENTS = [
   },
 ];
 
+type ExternalSubscriptionSeed = {
+  conceptName: string;
+  currency: "COP" | "USD";
+  billingType: "FIJO" | "PORCENTAJE_VENTA" | "VALOR_POR_VENTA";
+  priceCOP?: number;
+  priceUSD?: number; // centavos de dolar
+  period: "MENSUAL" | "ANUAL";
+};
+
+// Clientes externos (de otras marcas) con cobros recurrentes gestionados por
+// Bio Marketing. El correo y el telefono son PLACEHOLDERS (dominio .invalid,
+// nunca resuelve) — debes reemplazarlos por los datos reales desde el panel
+// de Clientes antes de que los recordatorios automaticos puedan enviarse.
+const EXTERNAL_CLIENTS: {
+  companyName: string;
+  email: string;
+  notes: string;
+  subscriptions: ExternalSubscriptionSeed[];
+}[] = [
+  {
+    companyName: "Calzado Hamsa",
+    email: "calzado-hamsa@actualizar.invalid",
+    notes: "ACTUALIZA el correo y el WhatsApp reales de este cliente antes de activar los recordatorios automaticos.",
+    subscriptions: [
+      {
+        conceptName: "Hosting Shopify",
+        currency: "USD",
+        billingType: "FIJO",
+        priceUSD: 2500,
+        period: "MENSUAL",
+      },
+      {
+        conceptName: "Automatizacion Kommo + autorespuestas",
+        currency: "COP",
+        billingType: "FIJO",
+        priceCOP: 50000,
+        period: "MENSUAL",
+      },
+    ],
+  },
+  {
+    companyName: "Mudalogic",
+    email: "mudalogic@actualizar.invalid",
+    notes: "ACTUALIZA el correo y el WhatsApp reales de este cliente antes de activar los recordatorios automaticos.",
+    subscriptions: [
+      {
+        conceptName: "Manejo de redes (8 imagenes + 2 videos IA) Instagram/Facebook",
+        currency: "COP",
+        billingType: "FIJO",
+        priceCOP: 350000,
+        period: "MENSUAL",
+      },
+    ],
+  },
+  {
+    companyName: "Grupo Saly",
+    email: "grupo-saly@actualizar.invalid",
+    notes:
+      "ACTUALIZA el correo y el WhatsApp reales. Falta agregar el cobro de la campana de Meta Ads (fijo o % de ventas) desde el panel.",
+    subscriptions: [
+      {
+        conceptName: "Hosting Shopify",
+        currency: "USD",
+        billingType: "FIJO",
+        priceUSD: 2500,
+        period: "MENSUAL",
+      },
+    ],
+  },
+  {
+    companyName: "Ritual",
+    email: "ritual@actualizar.invalid",
+    notes: "ACTUALIZA el correo y el WhatsApp reales. Falta agregar sus cobros desde el panel.",
+    subscriptions: [],
+  },
+  {
+    companyName: "Mariangel Cosmetics",
+    email: "mariangel-cosmetics@actualizar.invalid",
+    notes: "ACTUALIZA el correo y el WhatsApp reales. Falta agregar sus cobros desde el panel.",
+    subscriptions: [],
+  },
+];
+
 async function main() {
   const passwordJuanCarlos = await bcrypt.hash("88262856", 10);
   const passwordNicol = await bcrypt.hash("1127052812", 10);
@@ -440,8 +523,50 @@ async function main() {
     }
   }
 
+  for (const ext of EXTERNAL_CLIENTS) {
+    const client = await prisma.client.upsert({
+      where: { email: ext.email },
+      update: {},
+      create: {
+        firstName: ext.companyName,
+        lastName: "(actualizar contacto)",
+        email: ext.email,
+        phone: "0000000000",
+        companyName: ext.companyName,
+        notes: ext.notes,
+      },
+    });
+
+    for (const sub of ext.subscriptions) {
+      const existing = await prisma.clientSubscription.findFirst({
+        where: { clientId: client.id, conceptName: sub.conceptName },
+      });
+      if (existing) continue;
+
+      const initialChargeDate = new Date(today);
+      const renewalDate = new Date(today);
+      renewalDate.setDate(renewalDate.getDate() + 25);
+
+      await prisma.clientSubscription.create({
+        data: {
+          clientId: client.id,
+          conceptName: sub.conceptName,
+          currency: sub.currency,
+          billingType: sub.billingType,
+          priceCOP: sub.priceCOP ?? 0,
+          priceUSD: sub.priceUSD ?? null,
+          period: sub.period,
+          initialChargeDate,
+          renewalDate,
+          reconnectionFeeCOP: 0,
+          status: "AL_DIA",
+        },
+      });
+    }
+  }
+
   console.log(
-    `Seed completado: 2 usuarios, ${COMPANIES.length} empresas, cuentas sociales, estadisticas, catalogo de servicios y clientes demo.`
+    `Seed completado: 2 usuarios, ${COMPANIES.length} empresas, cuentas sociales, estadisticas, catalogo de servicios, clientes demo y ${EXTERNAL_CLIENTS.length} clientes externos (con datos de contacto pendientes de actualizar).`
   );
 }
 

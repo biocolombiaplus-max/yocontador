@@ -9,15 +9,19 @@ export default function RegisterPaymentForm({
   clientId,
   serviceName,
   suggestedAmount,
+  currency,
 }: {
   subscriptionId: string;
   clientId: string;
   serviceName: string;
+  /** En pesos para COP, en centavos para USD. */
   suggestedAmount: number;
+  currency: "COP" | "USD";
 }) {
   const [open, setOpen] = useState(false);
   const [state, formAction, pending] = useActionState(registerPaymentAction, {});
   const today = new Date().toISOString().slice(0, 10);
+  const displayAmount = currency === "USD" ? suggestedAmount / 100 : suggestedAmount;
 
   if (!open) {
     return (
@@ -72,18 +76,22 @@ export default function RegisterPaymentForm({
           <form action={formAction} className="space-y-3">
             <input type="hidden" name="subscriptionId" value={subscriptionId} />
             <input type="hidden" name="clientId" value={clientId} />
+            <input type="hidden" name="currency" value={currency} />
 
             <p className="text-xs text-slate-500">
               Servicio: <span className="font-medium text-slate-700">{serviceName}</span>
             </p>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Monto pagado (COP)</label>
+              <label className="mb-1 block text-xs font-medium text-slate-600">
+                Monto pagado ({currency})
+              </label>
               <input
-                name="amountCOP"
+                name="amount"
                 type="number"
-                min={1}
-                defaultValue={suggestedAmount}
+                min={currency === "USD" ? 0.01 : 1}
+                step={currency === "USD" ? "0.01" : "1"}
+                defaultValue={displayAmount || undefined}
                 required
                 className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30"
               />

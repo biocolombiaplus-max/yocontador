@@ -19,18 +19,20 @@ export async function registerPaymentAction(
 
   const subscriptionId = formData.get("subscriptionId")?.toString();
   const clientId = formData.get("clientId")?.toString();
-  const amountCOP = Math.round(Number(formData.get("amountCOP")));
+  const currency = (formData.get("currency")?.toString() || "COP") as "COP" | "USD";
+  const amountRaw = Number(formData.get("amount"));
+  const amount = currency === "USD" ? Math.round(amountRaw * 100) : Math.round(amountRaw);
   const method = (formData.get("method")?.toString() || "MANUAL") as "MANUAL" | "WOMPI" | "OTRO";
   const reference = formData.get("reference")?.toString().trim() || null;
   const paidAtRaw = formData.get("paidAt")?.toString();
 
   if (!subscriptionId || !clientId) return { error: "Solicitud invalida." };
-  if (!amountCOP || amountCOP <= 0) return { error: "El monto debe ser mayor a cero." };
+  if (!amount || amount <= 0) return { error: "El monto debe ser mayor a cero." };
 
   try {
     const result = await registerPaymentAndConfirm({
       subscriptionId,
-      amountCOP,
+      amount,
       method,
       reference,
       paidAt: paidAtRaw ? new Date(paidAtRaw) : new Date(),

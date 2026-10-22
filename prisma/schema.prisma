@@ -84,6 +84,17 @@ enum ReminderChannel {
   WHATSAPP
 }
 
+enum Currency {
+  COP
+  USD
+}
+
+enum BillingType {
+  FIJO
+  PORCENTAJE_VENTA
+  VALOR_POR_VENTA
+}
+
 model User {
   id                 String   @id @default(cuid())
   cedula             String   @unique
@@ -276,9 +287,22 @@ model ClientSubscription {
   id                 String             @id @default(cuid())
   clientId           String
   client             Client             @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  serviceId          String
-  service            ServiceOffering    @relation(fields: [serviceId], references: [id], onDelete: Restrict)
-  priceCOP           Int
+  serviceId          String?
+  service            ServiceOffering?   @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  // Concepto libre para cobros a clientes externos que no estan en el catalogo
+  // de servicios propios (p.ej. "Hosting Shopify", "Comision campana Meta Ads").
+  // Obligatorio cuando serviceId es nulo.
+  conceptName        String?
+  currency           Currency           @default(COP)
+  priceCOP           Int                @default(0)
+  priceUSD           Int? // en centavos de dolar
+  billingType        BillingType        @default(FIJO)
+  commissionRate     Float? // porcentaje (ej. 10 = 10%) cuando billingType = PORCENTAJE_VENTA
+  valorPorVenta      Int? // valor en COP por unidad vendida cuando billingType = VALOR_POR_VENTA
+  // Ventas del periodo (monto COP para PORCENTAJE_VENTA, unidades para
+  // VALOR_POR_VENTA) ingresadas manualmente cada mes para calcular el cobro.
+  // Se limpia automaticamente despues de registrar el pago del periodo.
+  pendingSalesBasis  Int?
   period             BillingPeriod      @default(MENSUAL)
   status             SubscriptionStatus @default(AL_DIA)
   initialChargeDate  DateTime

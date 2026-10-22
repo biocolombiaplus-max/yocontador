@@ -1,4 +1,6 @@
-import { formatCOP } from "@/lib/money";
+import { formatMoney } from "@/lib/money";
+
+type Currency = "COP" | "USD";
 
 const BRAND = {
   name: "Bio Marketing",
@@ -138,11 +140,13 @@ ${
 export type ReminderEmailInput = {
   clientName: string;
   serviceName: string;
-  amountCOP: number;
+  amount: number;
+  currency: Currency;
   period: "MENSUAL" | "ANUAL";
   renewalDate: Date;
   daysOffset: number;
   type: "RECORDATORIO" | "VENCIMIENTO" | "SUSPENSION";
+  /** En pesos. Solo se aplica/menciona cuando currency es COP. */
   reconnectionFeeCOP: number;
   paymentUrl: string;
   whatsappUrl: string;
@@ -150,6 +154,7 @@ export type ReminderEmailInput = {
 
 export function buildReminderEmail(input: ReminderEmailInput): { subject: string; html: string } {
   const period = input.period === "ANUAL" ? "ANUAL" : "MENSUAL";
+  const aplicaReconexion = input.currency === "COP" && input.reconnectionFeeCOP > 0;
   const fechaTexto = input.renewalDate.toLocaleDateString("es-CO", {
     day: "2-digit",
     month: "long",
@@ -157,7 +162,7 @@ export function buildReminderEmail(input: ReminderEmailInput): { subject: string
   });
 
   if (input.type === "SUSPENSION") {
-    const total = input.amountCOP + input.reconnectionFeeCOP;
+    const total = aplicaReconexion ? input.amount + input.reconnectionFeeCOP : input.amount;
     return {
       subject: `Servicio suspendido: ${input.serviceName} - Bio Marketing`,
       html: shell({
@@ -169,14 +174,16 @@ export function buildReminderEmail(input: ReminderEmailInput): { subject: string
         iconBg: "#B91C1C",
         title: "Tu servicio ha sido suspendido",
         subtitle: "Pago no recibido",
-        bodyHtml: `Hola <strong>${input.clientName}</strong>, lamentamos informarte que tu servicio <strong>${input.serviceName}</strong> fue <strong>suspendido</strong> porque no recibimos el pago en la fecha acordada.<br><br>Para reactivarlo, realiza el pago del periodo vencido mas el cargo de reconexion detallado abajo.`,
-        serviceBlock: serviceTable(input.serviceName, period, formatCOP(total)),
-        warningHtml: warningBox(
-          `El cargo de reconexion de <strong>${formatCOP(input.reconnectionFeeCOP)}</strong> cubre los costos tecnicos de reactivacion. Aplica cada vez que un servicio se suspende por mora — evitalo pagando antes del vencimiento.`
-        ),
+        bodyHtml: `Hola <strong>${input.clientName}</strong>, lamentamos informarte que tu servicio <strong>${input.serviceName}</strong> fue <strong>suspendido</strong> porque no recibimos el pago en la fecha acordada.<br><br>Para reactivarlo, realiza el pago del periodo vencido${aplicaReconexion ? " mas el cargo de reconexion detallado abajo" : ""}.`,
+        serviceBlock: serviceTable(input.serviceName, period, formatMoney(total, input.currency)),
+        warningHtml: aplicaReconexion
+          ? warningBox(
+              `El cargo de reconexion de <strong>${formatMoney(input.reconnectionFeeCOP, "COP")}</strong> cubre los costos tecnicos de reactivacion. Aplica cada vez que un servicio se suspende por mora — evitalo pagando antes del vencimiento.`
+            )
+          : undefined,
         ctaLabel: "Pagar y reactivar",
         ctaUrl: input.paymentUrl,
-        ctaHint: "Pago 100% seguro procesado por Wompi",
+        ctaHint: input.currency === "COP" ? "Pago 100% seguro procesado por Wompi" : "Coordina el pago por WhatsApp",
         whatsappUrl: input.whatsappUrl,
       }),
     };
@@ -195,13 +202,15 @@ export function buildReminderEmail(input: ReminderEmailInput): { subject: string
         title: "Tu servicio vence hoy",
         subtitle: "Paga antes de las 11:59 PM",
         bodyHtml: `Hola <strong>${input.clientName}</strong>, tu servicio <strong>${input.serviceName}</strong> vence <strong>hoy</strong>.<br><br>Realiza tu pago antes de las 11:59 PM para continuar sin interrupciones.`,
-        serviceBlock: serviceTable(input.serviceName, period, formatCOP(input.amountCOP)),
-        warningHtml: warningBox(
-          `Si el pago no se recibe hoy, manana el servicio sera suspendido y se sumara un cargo de reconexion de <strong>${formatCOP(input.reconnectionFeeCOP)}</strong>.`
-        ),
+        serviceBlock: serviceTable(input.serviceName, period, formatMoney(input.amount, input.currency)),
+        warningHtml: aplicaReconexion
+          ? warningBox(
+              `Si el pago no se recibe hoy, manana el servicio sera suspendido y se sumara un cargo de reconexion de <strong>${formatMoney(input.reconnectionFeeCOP, "COP")}</strong>.`
+            )
+          : undefined,
         ctaLabel: "Pagar ahora",
         ctaUrl: input.paymentUrl,
-        ctaHint: "Pago 100% seguro procesado por Wompi",
+        ctaHint: input.currency === "COP" ? "Pago 100% seguro procesado por Wompi" : "Coordina el pago por WhatsApp",
         whatsappUrl: input.whatsappUrl,
       }),
     };
@@ -222,15 +231,16 @@ export function buildReminderEmail(input: ReminderEmailInput): { subject: string
       title: esUltimoAviso ? "Tu servicio vence manana" : "Proximamente: renovacion de servicio",
       subtitle: esUltimoAviso ? "Evita cargos adicionales pagando hoy" : "Te avisamos con anticipacion",
       bodyHtml: `Hola <strong>${input.clientName}</strong>, te recordamos que tu servicio <strong>${input.serviceName}</strong> se renueva el <strong>${fechaTexto}</strong> (${input.daysOffset} ${input.daysOffset === 1 ? "dia" : "dias"}).<br><br>Puedes pagar desde ahora para mayor comodidad y evitar cualquier inconveniente.`,
-      serviceBlock: serviceTable(input.serviceName, period, formatCOP(input.amountCOP)),
-      warningHtml: esUltimoAviso
-        ? warningBox(
-            `Si el pago no se recibe antes del vencimiento, el servicio sera suspendido y se aplicara un cargo adicional de <strong>${formatCOP(input.reconnectionFeeCOP)}</strong> por reconexion.`
-          )
-        : undefined,
+      serviceBlock: serviceTable(input.serviceName, period, formatMoney(input.amount, input.currency)),
+      warningHtml:
+        esUltimoAviso && aplicaReconexion
+          ? warningBox(
+              `Si el pago no se recibe antes del vencimiento, el servicio sera suspendido y se aplicara un cargo adicional de <strong>${formatMoney(input.reconnectionFeeCOP, "COP")}</strong> por reconexion.`
+            )
+          : undefined,
       ctaLabel: "Pagar ahora",
       ctaUrl: input.paymentUrl,
-      ctaHint: "Pago 100% seguro procesado por Wompi",
+      ctaHint: input.currency === "COP" ? "Pago 100% seguro procesado por Wompi" : "Coordina el pago por WhatsApp",
       whatsappUrl: input.whatsappUrl,
     }),
   };
@@ -239,7 +249,8 @@ export function buildReminderEmail(input: ReminderEmailInput): { subject: string
 export type PaymentConfirmationInput = {
   clientName: string;
   serviceName: string;
-  amountCOP: number;
+  amount: number;
+  currency: Currency;
   reference: string;
   whatsappUrl: string;
 };
@@ -251,7 +262,7 @@ export function buildPaymentConfirmationEmail(input: PaymentConfirmationInput): 
   return {
     subject: `Pago confirmado: ${input.serviceName} - Bio Marketing`,
     html: shell({
-      preheader: `Recibimos tu pago de ${formatCOP(input.amountCOP)}. Tu servicio ${input.serviceName} sigue activo.`,
+      preheader: `Recibimos tu pago de ${formatMoney(input.amount, input.currency)}. Tu servicio ${input.serviceName} sigue activo.`,
       headerBg: BRAND.green,
       badgeText: "PAGO CONFIRMADO",
       badgeColor: "#0CA30C",
@@ -263,7 +274,7 @@ export function buildPaymentConfirmationEmail(input: PaymentConfirmationInput): 
       serviceBlock: `
         <div style="background:#f3eeff;border-radius:14px;padding:28px;text-align:center;border:2px solid #c4b5fd;">
           <p style="margin:0 0 4px;color:#6b21a8;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;">Monto pagado</p>
-          <p style="margin:0;color:${BRAND.purpleHeader};font-size:38px;font-weight:900;">${formatCOP(input.amountCOP)}</p>
+          <p style="margin:0;color:${BRAND.purpleHeader};font-size:38px;font-weight:900;">${formatMoney(input.amount, input.currency)}</p>
           <div style="margin:14px 0 0;height:1px;background:#ede8f5;"></div>
           <p style="margin:12px 0 4px;color:#9ca3af;font-size:12px;">Servicio: <strong style="color:${BRAND.purpleHeader};">${input.serviceName}</strong></p>
           <p style="margin:0;color:${BRAND.lilacMuted};font-size:11px;">Ref: ${input.reference}</p>

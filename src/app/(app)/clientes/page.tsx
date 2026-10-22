@@ -3,7 +3,21 @@ import { Search, ArrowUpRight, Mail, Phone } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { PageHeader, Card, Badge } from "@/components/ui";
 import { SUBSCRIPTION_STATUS_META } from "@/lib/constants";
+import { computeChargeAmount, conceptLabel } from "@/lib/crm/billing";
 import NewClientForm from "./new-client-form";
+import PendingChargesPanel, { type PendingCharge } from "./pending-charges-panel";
+
+function dateKey(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
+
+function daysUntil(date: Date): number {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const target = new Date(date);
+  target.setHours(0, 0, 0, 0);
+  return Math.round((target.getTime() - today.getTime()) / 86_400_000);
+}
 
 const STATUS_PRIORITY: Record<string, number> = {
   SUSPENDIDO: 0,
@@ -34,10 +48,32 @@ export default async function ClientesPage({
     include: {
       subscriptions: {
         where: { status: { not: "CANCELADO" } },
-        include: { service: true },
+        include: { service: true, reminders: { where: { channel: "WHATSAPP" } } },
       },
     },
   });
+
+  const todayKey = dateKey(new Date());
+  const pendingCharges: PendingCharge[] = clients
+    .flatMap((client) =>
+      client.subscriptions.map((sub) => {
+        const diff = daysUntil(sub.renewalDate);
+        const charge = computeChargeAmount(sub);
+        return {
+          subscriptionId: sub.id,
+          clientId: client.id,
+          clientName: `${client.firstName} ${client.lastName}`.trim(),
+          concept: conceptLabel(sub),
+          amount: charge.amount,
+          currency: charge.currency,
+          chargeReady: charge.ready,
+          diff,
+          whatsappSentToday: sub.reminders.some((r) => r.dateKey === todayKey),
+        };
+      })
+    )
+    .filter((item) => item.diff <= 3)
+    .sort((a, b) => a.diff - b.diff);
 
   return (
     <div>
@@ -46,6 +82,8 @@ export default async function ClientesPage({
         description="Todas las empresas y personas que contratan servicios de Bio Marketing."
         action={<NewClientForm />}
       />
+
+      <PendingChargesPanel items={pendingCharges} />
 
       <form className="mb-5">
         <div className="relative max-w-sm">

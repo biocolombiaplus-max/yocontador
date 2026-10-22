@@ -2,11 +2,16 @@ import { notFound } from "next/navigation";
 import { Mail, Phone, Building2, MessageCircle } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Card, PageHeader, Badge } from "@/components/ui";
-import { formatCOP } from "@/lib/money";
+import { formatMoney } from "@/lib/money";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { conceptLabel } from "@/lib/crm/billing";
 import { PAYMENT_METHOD_META } from "@/lib/constants";
 import NewSubscriptionForm from "./new-subscription-form";
 import SubscriptionRow from "./subscription-row";
+
+function dateKey(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
 
 export default async function ClientDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -19,11 +24,14 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
         include: {
           service: true,
           payments: { orderBy: { paidAt: "desc" } },
+          reminders: { where: { channel: "WHATSAPP" } },
         },
       },
     },
   });
   if (!client) notFound();
+
+  const todayKey = dateKey(new Date());
 
   const services = await prisma.serviceOffering.findMany({
     where: { isActive: true },
@@ -32,7 +40,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
   });
 
   const allPayments = client.subscriptions
-    .flatMap((s) => s.payments.map((p) => ({ ...p, serviceName: s.service.name })))
+    .flatMap((s) => s.payments.map((p) => ({ ...p, serviceName: conceptLabel(s), currency: s.currency })))
     .sort((a, b) => b.paidAt.getTime() - a.paidAt.getTime());
 
   const whatsappUrl = buildWhatsAppLink(client.phone, `Hola ${client.firstName}, te escribe Bio Marketing.`);
@@ -103,7 +111,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
                         <Badge tone="neutral">{PAYMENT_METHOD_META[p.method].label}</Badge>
                       </td>
                       <td className="py-2 text-right font-medium tabular-nums text-emerald-700">
-                        {formatCOP(p.amount)}
+                        {formatMoney(p.amount, p.currency)}
                       </td>
                     </tr>
                   ))}
@@ -125,15 +133,20 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
             key={sub.id}
             subscription={{
               id: sub.id,
-              serviceName: sub.service.name,
+              conceptName: conceptLabel(sub),
+              currency: sub.currency,
               priceCOP: sub.priceCOP,
+              priceUSD: sub.priceUSD,
+              billingType: sub.billingType,
+              commissionRate: sub.commissionRate,
+              valorPorVenta: sub.valorPorVenta,
+              pendingSalesBasis: sub.pendingSalesBasis,
               period: sub.period,
               status: sub.status,
               renewalDate: sub.renewalDate,
+              whatsappSentToday: sub.reminders.some((r) => r.dateKey === todayKey),
             }}
             clientId={client.id}
-            clientFirstName={client.firstName}
-            clientPhone={client.phone}
           />
         ))}
         {client.subscriptions.length === 0 && (

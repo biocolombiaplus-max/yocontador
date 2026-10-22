@@ -3,6 +3,7 @@ import { sendEmail } from "@/lib/email/send";
 import { buildReminderEmail, buildPaymentConfirmationEmail } from "@/lib/email/templates";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { generateWompiPaymentLink } from "@/lib/wompi";
+import { computeChargeAmount, conceptLabel } from "@/lib/crm/billing";
 
 const SUPPORT_WHATSAPP = process.env.SUPPORT_WHATSAPP ?? "573505457420";
 
@@ -21,17 +22,17 @@ function diasEntre(fecha: Date, hoy: Date): number {
 }
 
 function planDeAvisos(period: "MENSUAL" | "ANUAL"): number[] {
-  return period === "ANUAL" ? [8, 5, 3, 1, 0] : [2, 0];
+  return period === "ANUAL" ? [8, 5, 3, 1, 0] : [3, 0];
 }
 
-function buildReference(clientFirstName: string, clientLastName: string, serviceName: string) {
+function buildReference(clientFirstName: string, clientLastName: string, concept: string) {
   const clean = (s: string) => s.replace(/\s/g, "").toUpperCase();
   return (
     "BM-" +
     clean(clientFirstName).slice(0, 4) +
     clean(clientLastName).slice(0, 4) +
     "-" +
-    clean(serviceName).slice(0, 5) +
+    clean(concept).slice(0, 5) +
     "-" +
     Date.now()
   );
@@ -82,6 +83,7 @@ export type ReminderSweepResult = {
   processed: number;
   emailsSent: number;
   suspended: number;
+  pendingSalesInput: string[];
   errors: string[];
 };
 
@@ -89,7 +91,13 @@ export type ReminderSweepResult = {
 export async function runReminderSweep(): Promise<ReminderSweepResult> {
   const hoy = startOfDay(new Date());
   const key = dateKey(hoy);
-  const result: ReminderSweepResult = { processed: 0, emailsSent: 0, suspended: 0, errors: [] };
+  const result: ReminderSweepResult = {
+    processed: 0,
+    emailsSent: 0,
+    suspended: 0,
+    pendingSalesInput: [],
+    errors: [],
+  };
 
   const subscriptions = await prisma.clientSubscription.findMany({
     where: { status: { in: ["AL_DIA", "PENDIENTE", "SUSPENDIDO"] } },
@@ -101,32 +109,43 @@ export async function runReminderSweep(): Promise<ReminderSweepResult> {
     const diff = diasEntre(sub.renewalDate, hoy);
     const plan = planDeAvisos(sub.period);
     const clientName = `${sub.client.firstName} ${sub.client.lastName}`.trim();
+    const concept = conceptLabel(sub);
     const whatsappReminder = buildWhatsAppLink(
       sub.client.phone,
-      `Hola ${sub.client.firstName}, te escribe Bio Marketing sobre tu servicio: ${sub.service.name}`
+      `Hola ${sub.client.firstName}, te escribe Bio Marketing sobre tu servicio: ${concept}`
     );
+
+    const needsAttentionNow = (plan.includes(diff) && sub.status !== "SUSPENDIDO") || (diff === -1 && sub.status !== "SUSPENDIDO");
+    const charge = computeChargeAmount(sub);
+    if (needsAttentionNow && !charge.ready) {
+      result.pendingSalesInput.push(`${clientName} - ${concept}`);
+      continue;
+    }
 
     try {
       if (plan.includes(diff) && sub.status !== "SUSPENDIDO") {
         const type: "RECORDATORIO" | "VENCIMIENTO" = diff === 0 ? "VENCIMIENTO" : "RECORDATORIO";
         const already = await alreadySent(sub.id, type, "EMAIL", key);
         if (!already) {
-          const reference = buildReference(sub.client.firstName, sub.client.lastName, sub.service.name);
+          const reference = buildReference(sub.client.firstName, sub.client.lastName, concept);
           const paymentUrl =
-            generateWompiPaymentLink({
-              fullName: clientName,
-              amountCOP: sub.priceCOP,
-              reference,
-              redirectWhatsAppUrl: buildWhatsAppLink(
-                SUPPORT_WHATSAPP,
-                `Hola! Acabo de pagar el servicio ${sub.service.name}. Referencia: ${reference}`
-              ),
-            }) ?? whatsappReminder;
+            (sub.currency === "COP"
+              ? generateWompiPaymentLink({
+                  fullName: clientName,
+                  amountCOP: charge.amount,
+                  reference,
+                  redirectWhatsAppUrl: buildWhatsAppLink(
+                    SUPPORT_WHATSAPP,
+                    `Hola! Acabo de pagar el servicio ${concept}. Referencia: ${reference}`
+                  ),
+                })
+              : null) ?? whatsappReminder;
 
           const { subject, html } = buildReminderEmail({
             clientName,
-            serviceName: sub.service.name,
-            amountCOP: sub.priceCOP,
+            serviceName: concept,
+            amount: charge.amount,
+            currency: charge.currency,
             period: sub.period,
             renewalDate: sub.renewalDate,
             daysOffset: diff,
@@ -152,23 +171,27 @@ export async function runReminderSweep(): Promise<ReminderSweepResult> {
       if (diff === -1 && sub.status !== "SUSPENDIDO") {
         const already = await alreadySent(sub.id, "SUSPENSION", "EMAIL", key);
         if (!already) {
-          const totalConReconexion = sub.priceCOP + sub.reconnectionFeeCOP;
-          const reference = buildReference(sub.client.firstName, sub.client.lastName, sub.service.name) + "-RECON";
+          const aplicaReconexion = sub.currency === "COP" && sub.reconnectionFeeCOP > 0;
+          const totalConReconexion = aplicaReconexion ? charge.amount + sub.reconnectionFeeCOP : charge.amount;
+          const reference = buildReference(sub.client.firstName, sub.client.lastName, concept) + "-RECON";
           const paymentUrl =
-            generateWompiPaymentLink({
-              fullName: clientName,
-              amountCOP: totalConReconexion,
-              reference,
-              redirectWhatsAppUrl: buildWhatsAppLink(
-                SUPPORT_WHATSAPP,
-                `Hola! Acabo de pagar el servicio ${sub.service.name}. Referencia: ${reference}`
-              ),
-            }) ?? whatsappReminder;
+            (sub.currency === "COP"
+              ? generateWompiPaymentLink({
+                  fullName: clientName,
+                  amountCOP: totalConReconexion,
+                  reference,
+                  redirectWhatsAppUrl: buildWhatsAppLink(
+                    SUPPORT_WHATSAPP,
+                    `Hola! Acabo de pagar el servicio ${concept}. Referencia: ${reference}`
+                  ),
+                })
+              : null) ?? whatsappReminder;
 
           const { subject, html } = buildReminderEmail({
             clientName,
-            serviceName: sub.service.name,
-            amountCOP: sub.priceCOP,
+            serviceName: concept,
+            amount: charge.amount,
+            currency: charge.currency,
             period: sub.period,
             renewalDate: sub.renewalDate,
             daysOffset: diff,
@@ -199,7 +222,7 @@ export async function runReminderSweep(): Promise<ReminderSweepResult> {
 
 export type RegisterPaymentInput = {
   subscriptionId: string;
-  amountCOP: number;
+  amount: number;
   method: "MANUAL" | "WOMPI" | "OTRO";
   reference?: string | null;
   paidAt?: Date;
@@ -224,7 +247,7 @@ export async function registerPaymentAndConfirm(
   const payment = await prisma.payment.create({
     data: {
       subscriptionId: sub.id,
-      amount: input.amountCOP,
+      amount: input.amount,
       method: input.method,
       reference: input.reference ?? null,
       paidAt: input.paidAt ?? new Date(),
@@ -236,23 +259,25 @@ export async function registerPaymentAndConfirm(
 
   await prisma.clientSubscription.update({
     where: { id: sub.id },
-    data: { status: "AL_DIA", renewalDate: nuevaRenovacion },
+    data: { status: "AL_DIA", renewalDate: nuevaRenovacion, pendingSalesBasis: null },
   });
 
+  const concept = conceptLabel(sub);
   const clientName = `${sub.client.firstName} ${sub.client.lastName}`.trim();
   const whatsappUrl = buildWhatsAppLink(
     sub.client.phone,
-    `Hola ${sub.client.firstName}! Confirmamos tu pago de ${sub.service.name}. Tu servicio ya esta restablecido y activo. Gracias por confiar en Bio Marketing.`
+    `Hola ${sub.client.firstName}! Confirmamos tu pago de ${concept}. Tu servicio ya esta restablecido y activo. Gracias por confiar en Bio Marketing.`
   );
 
   const { subject, html } = buildPaymentConfirmationEmail({
     clientName,
-    serviceName: sub.service.name,
-    amountCOP: input.amountCOP,
+    serviceName: concept,
+    amount: input.amount,
+    currency: sub.currency,
     reference: input.reference || payment.id,
     whatsappUrl: buildWhatsAppLink(
       SUPPORT_WHATSAPP,
-      `Hola, te escribo por el servicio ${sub.service.name} de ${clientName}`
+      `Hola, te escribo por el servicio ${concept} de ${clientName}`
     ),
   });
 
