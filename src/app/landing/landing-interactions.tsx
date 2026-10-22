@@ -1,50 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-
-// Acceso oculto al panel: sin boton visible de "Iniciar sesion" en la
-// landing publica. Escribiendo "123456" rapido (menos de 600ms entre cada
-// digito) en cualquier parte de la pagina se abre la pantalla de login real,
-// donde se entra con la cedula y contrasena de siempre — esto no es una
-// contrasena, solo un atajo de teclado hacia /login.
-const SECRET_CODE = "123456";
-const SECRET_KEY_TIMEOUT_MS = 600;
-
-function useHiddenLoginShortcut() {
-  const router = useRouter();
-
-  useEffect(() => {
-    let buffer = "";
-    let lastKeyAt = 0;
-
-    function onKeyDown(e: KeyboardEvent) {
-      const target = e.target as HTMLElement | null;
-      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
-      if (!/^[0-9]$/.test(e.key)) {
-        buffer = "";
-        return;
-      }
-
-      const now = performance.now();
-      if (now - lastKeyAt > SECRET_KEY_TIMEOUT_MS) buffer = "";
-      lastKeyAt = now;
-
-      buffer = (buffer + e.key).slice(-SECRET_CODE.length);
-      if (buffer === SECRET_CODE) {
-        buffer = "";
-        router.push("/login");
-      }
-    }
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [router]);
-}
 
 export default function LandingInteractions() {
-  useHiddenLoginShortcut();
-
   useEffect(() => {
     const nav = document.getElementById("bioNav");
     const onScroll = () => nav?.classList.toggle("scrolled", window.scrollY > 10);

@@ -1,4 +1,5 @@
-import { Check, ArrowUpRight, Sparkles, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { Check, ArrowUpRight, Sparkles, ShieldCheck, LogIn } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatCOP } from "@/lib/money";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
@@ -123,6 +124,10 @@ export default async function LandingPage() {
           <a href="#planes">Planes</a>
           <a href="#servicios">Servicios</a>
           <a href="#contacto">Contacto</a>
+          <Link href="/login" className="nav-login">
+            <LogIn size={15} />
+            Iniciar sesion
+          </Link>
           <a href={heroWhatsApp} className="nav-cta" target="_blank" rel="noopener noreferrer">
             <WhatsAppIcon size={17} />
             WhatsApp
